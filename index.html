@@ -1,375 +1,117 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>選一個屬於我們的今天</title>
-<meta name="description" content="一個為她設計的浪漫小互動，從兩個口袋目的地開始，選出此刻最想去的地方。" />
-<style>
-  :root{
-    /* 這裡之後可換成你指定風格色系 */
-    --bg:#f7f7fb;
-    --card:#ffffff;
-    --ink:#1f2937;
-    --ink-2:#6b7280;
-    --brand:#2563eb;     /* 主色 */
-    --accent:#f59e0b;    /* 點綴色 */
-    --shadow:0 12px 30px rgba(0,0,0,.08);
-    --radius:22px;
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;font-family:ui-rounded, system-ui, -apple-system, "Segoe UI",
-    "PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
-    color:var(--ink); background:linear-gradient(180deg,#fff, var(--bg) 40%, #fff);
-    -webkit-tap-highlight-color: transparent;
-  }
-  .wrap{min-height:100vh; display:flex; flex-direction:column; align-items:center; }
-  header{
-    width:100%; padding:14px 16px; display:flex; align-items:center; justify-content:center;
-    position:sticky; top:0; z-index:10; backdrop-filter:saturate(180%) blur(8px);
-  }
-  .title{font-weight:800; letter-spacing:.5px}
-  .gear{
-    position:absolute; right:10px; top:10px; border:none; background:transparent; font-size:20px; cursor:pointer;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>我們的第一次旅行 💕</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(180deg, #ffe4ec, #fff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      text-align: center;
+    }
 
-  main{width:100%; flex:1; display:flex; align-items:center; justify-content:center; padding:18px 16px 28px;}
-  .card{
-    width:100%; max-width:540px; background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
-    padding:18px; position:relative; overflow:hidden;
-  }
-  .pill{display:inline-block; font-size:12px; padding:6px 10px; border-radius:999px; background:#eef2ff; color:#3730a3; margin-bottom:6px}
-  .lead{font-size:20px; line-height:1.5; font-weight:700;}
-  .sub{color:var(--ink-2); margin-top:6px}
+    h1 {
+      font-size: 1.5rem;
+      color: #d6336c;
+      margin-bottom: 1rem;
+      padding: 0 1rem;
+    }
 
-  .stage{margin-top:16px; position:relative;}
-  .option{
-    background:#fff; border:1px solid #eef2f7; border-radius:18px; padding:14px;
-    display:flex; gap:12px; align-items:center; margin:12px 0; cursor:pointer;
-    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-  }
-  .option:hover{transform:translateY(-1px); box-shadow:0 6px 20px rgba(0,0,0,.06)}
-  .icon{
-    width:44px; height:44px; border-radius:12px; background:#f3f4f6; display:grid; place-items:center; font-size:22px;
-  }
-  .o-title{font-weight:700}
-  .o-desc{font-size:13px; color:var(--ink-2)}
-  .chev{margin-left:auto; font-size:18px; color:#c1c9d6}
-  .hint{font-size:13px; color:var(--ink-2); text-align:center; margin-top:8px}
+    .card-container {
+      position: relative;
+      width: 260px;
+      height: 360px;
+    }
 
-  .btn{
-    width:100%; border:none; border-radius:14px; padding:14px 16px; font-size:16px; font-weight:800; cursor:pointer;
-  }
-  .btn-primary{background:var(--brand); color:#fff; box-shadow:0 10px 24px rgba(37,99,235,.25)}
-  .btn-ghost{background:#f3f4f6; color:#111827}
+    .card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #d6336c;
+      user-select: none;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
 
-  .footer{
-    margin-top:16px; display:grid; gap:10px;
-  }
-
-  /* step control */
-  [data-step]{display:none}
-  [data-step].active{display:block; animation:fade .25s ease}
-  @keyframes fade{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
-
-  /* vibe chips */
-  .chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:10px}
-  .chip{
-    border:1px dashed #e5e7eb; padding:10px 12px; border-radius:999px; font-size:14px; cursor:pointer;
-    user-select:none;
-  }
-  .chip.active{background:#fff7ed; border-color:#fed7aa; color:#9a3412}
-
-  /* modal (quick setup) */
-  .modal{
-    position:fixed; inset:0; display:none; place-items:center; background:rgba(0,0,0,.32); z-index:50;
-  }
-  .modal.show{display:grid}
-  .sheet{
-    width:min(560px,92vw); background:#fff; border-radius:20px; padding:18px; box-shadow:var(--shadow)
-  }
-  .field{display:grid; gap:6px; margin:12px 0}
-  input[type="text"], input[type="url"]{
-    width:100%; padding:12px; border-radius:12px; border:1px solid #e5e7eb; font-size:15px;
-  }
-
-  /* confetti canvas */
-  canvas#fx{position:fixed; inset:0; pointer-events:none}
-</style>
+    .message {
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
+      color: #333;
+      display: none;
+    }
+  </style>
 </head>
 <body>
-<canvas id="fx"></canvas>
+  <h1>今天是我們的第一次旅行 💕<br>妳想去哪裡呢？</h1>
 
-<div class="wrap">
-  <header>
-    <strong class="title">今天，讓妳選 🗺️</strong>
-    <button class="gear" aria-label="設定" title="設定" id="openSetup">⚙️</button>
-  </header>
-
-  <main>
-    <section class="card">
-
-      <!-- STEP 1: 啟動 -->
-      <div data-step="1" class="active">
-        <span class="pill">小小儀式感</span>
-        <div class="lead">今晚選擇權交給妳</div>
-        <div class="sub">我準備了兩個口袋目的地。<br>不急，跟著感覺走就好。</div>
-        <div class="footer">
-          <button class="btn btn-primary" id="start">開始挑選</button>
-          <button class="btn btn-ghost" id="peek">先看看有哪些</button>
-        </div>
-      </div>
-
-      <!-- STEP 2: 選目的地（兩張卡） -->
-      <div data-step="2">
-        <span class="pill">Step 1</span>
-        <div class="lead">想先去哪一個？</div>
-        <div class="sub">點一下卡片即可選擇，也可以左右滑動換邊。</div>
-
-        <div class="stage" id="choices">
-          <div class="option" data-pick="A">
-            <div class="icon">📍</div>
-            <div>
-              <div class="o-title" id="spotA_name">安平老街</div>
-              <div class="o-desc"  id="spotA_desc">老屋小巷慢慢走</div>
-            </div>
-            <div class="chev">➜</div>
-          </div>
-          <div class="option" data-pick="B">
-            <div class="icon">🌊</div>
-            <div>
-              <div class="o-title" id="spotB_name">四草綠色隧道</div>
-              <div class="o-desc"  id="spotB_desc">被樹影包圍的水上小旅行</div>
-            </div>
-            <div class="chev">➜</div>
-          </div>
-          <div class="hint">* 這兩個都是妳之前說「一定要去」的 💙</div>
-        </div>
-      </div>
-
-      <!-- STEP 3: 氛圍加點（可跳過） -->
-      <div data-step="3">
-        <span class="pill">Step 2</span>
-        <div class="lead">想要哪種今天的氛圍？</div>
-        <div class="sub">不一定要全滿分，選一個當主線就好。</div>
-
-        <div class="chips" id="vibes">
-          <div class="chip" data-vibe="慢慢散步">🚶‍♀️ 慢慢散步</div>
-          <div class="chip" data-vibe="美食探索">🍜 美食探索</div>
-          <div class="chip" data-vibe="拍照打卡">📷 拍照打卡</div>
-          <div class="chip" data-vibe="療癒放空">🌙 療癒放空</div>
-        </div>
-
-        <div class="footer">
-          <button class="btn btn-primary" id="finish">完成選擇</button>
-          <button class="btn btn-ghost" id="skipVibe">先跳過</button>
-        </div>
-      </div>
-
-      <!-- STEP 4: 結果 -->
-      <div data-step="4">
-        <span class="pill">就決定是妳 💫</span>
-        <div class="lead" id="resultTitle">今晚一起去 ——</div>
-        <div class="sub" id="resultSub">我會負責導航與路上驚喜，妳只要牽著我就好。</div>
-
-        <div class="stage">
-          <div class="option" style="cursor:default">
-            <div class="icon" id="resultIcon">📍</div>
-            <div>
-              <div class="o-title" id="resultName">安平老街</div>
-              <div class="o-desc"  id="resultVibe">氛圍：慢慢散步</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="footer">
-          <a id="mapLink" class="btn btn-primary" target="_blank" rel="noopener">打開地圖</a>
-          <button class="btn btn-ghost" id="reshuffle">想重選一下</button>
-        </div>
-      </div>
-
-    </section>
-  </main>
-</div>
-
-<!-- 設定面板（可即時改兩個目的地） -->
-<div class="modal" id="setupModal" aria-hidden="true">
-  <div class="sheet">
-    <div class="lead" style="font-size:18px">快速設定（可隨時改）</div>
-    <div class="sub">填入她提供的兩個必去點；地圖連結可用 Google Maps 共享連結或地名關鍵字。</div>
-
-    <div class="field">
-      <label>目的地 A 名稱</label>
-      <input type="text" id="inA_name" placeholder="安平老街" />
-    </div>
-    <div class="field">
-      <label>目的地 A 簡述</label>
-      <input type="text" id="inA_desc" placeholder="老屋小巷慢慢走" />
-    </div>
-    <div class="field">
-      <label>目的地 A 地圖（可放網址或地名）</label>
-      <input type="text" id="inA_map" placeholder="安平老街" />
-    </div>
-
-    <div class="field">
-      <label>目的地 B 名稱</label>
-      <input type="text" id="inB_name" placeholder="四草綠色隧道" />
-    </div>
-    <div class="field">
-      <label>目的地 B 簡述</label>
-      <input type="text" id="inB_desc" placeholder="被樹影包圍的水上小旅行" />
-    </div>
-    <div class="field">
-      <label>目的地 B 地圖（可放網址或地名）</label>
-      <input type="text" id="inB_map" placeholder="四草綠色隧道" />
-    </div>
-
-    <div style="display:flex; gap:10px; margin-top:8px">
-      <button class="btn btn-ghost" id="closeSetup">取消</button>
-      <button class="btn btn-primary" id="saveSetup">儲存</button>
-    </div>
+  <div class="card-container" id="cardContainer">
+    <div class="card" data-place="景點 B">景點 B</div>
+    <div class="card" data-place="景點 A">景點 A</div>
   </div>
-</div>
 
-<script>
-  // --- 簡單狀態 ---
-  const S = {
-    A: { name:"安平老街", desc:"老屋小巷慢慢走", map:"安平老街", icon:"📍" },
-    B: { name:"四草綠色隧道", desc:"被樹影包圍的水上小旅行", map:"四草綠色隧道", icon:"🌊" },
-    pick:null, vibe:null
-  };
+  <div class="message" id="message"></div>
 
-  // --- 工具 ---
-  const $ = s=>document.querySelector(s);
-  const $$ = s=>document.querySelectorAll(s);
-  const setStep = n=>{
-    $$('[data-step]').forEach(el=>el.classList.remove('active'));
-    $(`[data-step="${n}"]`).classList.add('active');
-    window.scrollTo({top:0,behavior:'smooth'});
-  };
-  const vibrate = ms=>{ if (window.navigator.vibrate) navigator.vibrate(ms) };
+  <script>
+    const container = document.getElementById("cardContainer");
+    const cards = document.querySelectorAll(".card");
+    let isDragging = false;
+    let startX, currentCard;
 
-  // 初始化顯示
-  const syncUI=()=>{
-    $('#spotA_name').textContent = S.A.name;
-    $('#spotA_desc').textContent = S.A.desc;
-    $('#spotB_name').textContent = S.B.name;
-    $('#spotB_desc').textContent = S.B.desc;
-  };
-  syncUI();
-
-  // Step1
-  $('#start').addEventListener('click', ()=>{ vibrate(10); setStep(2); });
-  $('#peek').addEventListener('click', ()=>{ vibrate(5); document.getElementById('openSetup').click(); });
-
-  // Step2 選擇
-  $$('#choices .option').forEach(op=>{
-    op.addEventListener('click', ()=>{
-      const which = op.dataset.pick;
-      S.pick = which;
-      vibrate([15,30,15]);
-      setStep(3);
-    });
-    // 簡單滑動換邊（非必要）
-    let sx=null;
-    op.addEventListener('touchstart', e=>{ sx=e.touches[0].clientX; }, {passive:true});
-    op.addEventListener('touchmove', e=>{
-      if(sx===null) return;
-      const dx = e.touches[0].clientX - sx;
-      op.style.transform=`translateX(${dx/8}px) rotate(${dx/80}deg)`;
-      op.style.borderColor = Math.abs(dx)>40 ? '#c7d2fe' : '#eef2f7';
-    }, {passive:true});
-    op.addEventListener('touchend', e=>{
-      op.style.transform=''; op.style.borderColor='#eef2f7'; sx=null;
-    });
-  });
-
-  // Step3 氛圍
-  $$('#vibes .chip').forEach(ch=>{
-    ch.addEventListener('click', ()=>{
-      $$('#vibes .chip').forEach(x=>x.classList.remove('active'));
-      ch.classList.add('active');
-      S.vibe = ch.dataset.vibe;
-      vibrate(8);
-    });
-  });
-  $('#finish').addEventListener('click', ()=>{
-    renderResult(); fireConfetti(); setStep(4);
-  });
-  $('#skipVibe').addEventListener('click', ()=>{
-    S.vibe = null; renderResult(); fireConfetti(); setStep(4);
-  });
-
-  // Step4 結果
-  function renderResult(){
-    const chosen = S[ S.pick || 'A' ];
-    $('#resultIcon').textContent = chosen.icon || '📍';
-    $('#resultName').textContent = chosen.name;
-    $('#resultTitle').textContent = `今晚一起去 —— ${chosen.name}`;
-    $('#resultVibe').textContent = S.vibe ? `氛圍：${S.vibe}` : '氛圍：隨心所欲';
-    // 地圖連結：若填的是網址就直接用；若是地名則帶到 Google Maps 搜尋
-    const url = (chosen.map||'').trim();
-    const finalURL = /^https?:\/\//i.test(url)
-      ? url
-      : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(url||chosen.name)}`;
-    const link = $('#mapLink');
-    link.href = finalURL;
-    link.textContent = `打開 ${chosen.name} 的地圖`;
-  }
-  $('#reshuffle').addEventListener('click', ()=>{ setStep(2); });
-
-  // 設定面板
-  const setup = {
-    open: ()=>$('#setupModal').classList.add('show'),
-    close: ()=>$('#setupModal').classList.remove('show'),
-    load: ()=>{
-      $('#inA_name').value=S.A.name;  $('#inA_desc').value=S.A.desc;  $('#inA_map').value=S.A.map;
-      $('#inB_name').value=S.B.name;  $('#inB_desc').value=S.B.desc;  $('#inB_map').value=S.B.map;
-    },
-    save: ()=>{
-      S.A.name=$('#inA_name').value||S.A.name;
-      S.A.desc=$('#inA_desc').value||S.A.desc;
-      S.A.map =$('#inA_map').value||S.A.map;
-      S.B.name=$('#inB_name').value||S.B.name;
-      S.B.desc=$('#inB_desc').value||S.B.desc;
-      S.B.map =$('#inB_map').value||S.B.map;
-      syncUI();
-    }
-  };
-  $('#openSetup').addEventListener('click', ()=>{ setup.load(); setup.open(); });
-  $('#closeSetup').addEventListener('click', setup.close);
-  $('#saveSetup').addEventListener('click', ()=>{ setup.save(); setup.close(); });
-
-  // 小彩帶（極輕量）
-  const cvs = document.getElementById('fx');
-  const ctx = cvs.getContext('2d');
-  let W=0,H=0; function fit(){ W= cvs.width = window.innerWidth; H= cvs.height = window.innerHeight; } fit();
-  window.addEventListener('resize', fit);
-  function fireConfetti(){
-    const N=80, P=[];
-    for(let i=0;i<N;i++){
-      P.push({
-        x:Math.random()*W, y:-20, r:2+Math.random()*4, vy:1+Math.random()*3, vx:(Math.random()-.5)*1.2, a:1
+    cards.forEach(card => {
+      card.addEventListener("touchstart", e => {
+        isDragging = true;
+        currentCard = card;
+        startX = e.touches[0].clientX;
       });
-    }
-    let t=0; const tick=()=>{
-      ctx.clearRect(0,0,W,H);
-      P.forEach(p=>{
-        p.x+=p.vx; p.y+=p.vy; p.a*=0.994;
-        ctx.globalAlpha=p.a;
-        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`hsl(${(t+p.x)%360} 90% 60%)`; ctx.fill();
-      });
-      ctx.globalAlpha=1;
-      t+=2;
-      if (P.some(p=>p.a>0.02 && p.y<H+12)) requestAnimationFrame(tick);
-      else ctx.clearRect(0,0,W,H);
-    };
-    tick();
-  }
 
-  // 若裝置支援 PWA/全螢幕，可再補入口（等你給風格我再加）
-</script>
+      card.addEventListener("touchmove", e => {
+        if (!isDragging) return;
+        const dx = e.touches[0].clientX - startX;
+        currentCard.style.transform = `translateX(${dx}px) rotate(${dx / 10}deg)`;
+      });
+
+      card.addEventListener("touchend", e => {
+        if (!isDragging) return;
+        isDragging = false;
+
+        const dx = e.changedTouches[0].clientX - startX;
+
+        if (dx > 100) {
+          // 右滑選擇
+          currentCard.style.transform = "translateX(500px) rotate(30deg)";
+          currentCard.style.opacity = 0;
+          showMessage(currentCard.dataset.place);
+        } else if (dx < -100) {
+          // 左滑放棄
+          currentCard.style.transform = "translateX(-500px) rotate(-30deg)";
+          currentCard.style.opacity = 0;
+        } else {
+          // 回到原位
+          currentCard.style.transform = "";
+        }
+      });
+    });
+
+    function showMessage(place) {
+      const msg = document.getElementById("message");
+      msg.innerText = `妳選擇了「${place}」，我已經幫妳安排好囉 💕`;
+      msg.style.display = "block";
+    }
+  </script>
 </body>
 </html>
