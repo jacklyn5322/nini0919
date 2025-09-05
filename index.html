@@ -384,13 +384,7 @@
     const s3 = state.picks.step3 || '交給你安排';
     const s4 = state.picks.step4 ? `小收尾：${state.picks.step4}` : '小收尾：遇見了再說。';
 
-    const lines = [
-      `<div class="res-line">第一幕：<b>${cleanLabel(s1)}</b></div>`,
-      `<div class="res-line">味道是：<b>${cleanLabel(s2)}</b></div>`,
-      `<div class="res-line">休息我們去：<b>${cleanLabel(s3)}</b></div>`,
-      `<div class="res-line">${s4}</div>`
-    ];
-    qs('#summary').innerHTML = lines.join("");
+    qs('#summary').innerHTML = "";
   }
 
   async function copySummary(){
