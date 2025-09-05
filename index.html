@@ -3,162 +3,141 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>台南小冒險 · 專屬妳的互動旅行</title>
-
-<!-- Google Fonts：日系圓潤＋手寫 -->
-<link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Noto+Sans+TC:wght@400;700;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
-
+<title>跟著郵票去旅行 · 台南小冒險</title>
+<link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Noto+Sans+TC:wght@400;700;900&family=Caveat:wght@700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#F7F6F3;          /* 霧米白 */
-  --ink:#3E3B37;         /* 柔黑 */
-  --card:#FFFFFF;        /* 卡片白 */
-  --accent:#6A8CAF;      /* 柔藍重點 */
-  --soft:#E9E5DC;        /* 柔灰 */
-  --blush:#F2C9C1;       /* 霧粉 */
-  --sage:#CDE1D6;        /* 霧綠 */
-  --sky:#DDE9F5;         /* 霧藍 */
-  --honey:#F6E1A9;       /* 霧蜜 */
-  --shadow:0 10px 28px rgba(0,0,0,.08);
+  --bg:#F7F3EA;          /* 復古紙張底 */
+  --paper:#FFFEFA;       /* 信紙白 */
+  --ink:#3B372F;         /* 暖黑 */
+  --soft:#E6E0D2;        /* 淡卡其線 */
+  --accent:#2F5DA8;      /* 航空郵藍 */
+  --air:#E43C2A;         /* 航空郵紅 */
+  --sage:#CFE5D6; --blush:#F4D0C7; --sky:#DDE9F5; --honey:#F7E3AE;
+  --shadow:0 12px 28px rgba(0,0,0,.10);
 }
-
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);}
-body{font-family:"Noto Sans TC","Kosugi Maru",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;line-height:1.65}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:"Noto Sans TC","Kosugi Maru",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif; line-height:1.7}
 
-.wrap{max-width:960px;margin:auto;padding:16px}
-
-/* Header */
+/* Airmail stripe header */
 header{
-  position:sticky; top:0; z-index:10; backdrop-filter:saturate(180%) blur(8px);
-  background:rgba(247,246,243,.85); border-bottom:1px solid rgba(0,0,0,.05)
+  position:sticky; top:0; z-index:10; backdrop-filter:saturate(160%) blur(8px);
+  background:rgba(255,254,250,.9); border-bottom:1px solid rgba(0,0,0,.05);
 }
-.nav{display:flex;align-items:center;justify-content:space-between;padding:10px 16px}
+.nav{max-width:980px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:10px 14px}
 .brand{display:flex;align-items:center;gap:10px}
-.brand img{height:46px;width:auto;border-radius:10px;box-shadow:var(--shadow)}
-.brand .t{font-weight:900;letter-spacing:.5px;font-size:clamp(18px,4.2vw,26px)}
-.cta-top a{display:inline-block;text-decoration:none;background:var(--accent);color:#fff;
-  padding:10px 14px;border-radius:12px;font-weight:800;box-shadow:var(--shadow)}
+.brand img{height:46px;border-radius:9px;box-shadow:var(--shadow)}
+.brand .t{font-weight:900;letter-spacing:.4px;font-size:clamp(18px,4.4vw,26px)}
+.cta-top a{display:inline-block;text-decoration:none;background:var(--accent);color:#fff;padding:10px 14px;border-radius:12px;font-weight:900;box-shadow:var(--shadow)}
+.airline{
+  position:relative;
+}
+.airline:after{
+  content:""; position:absolute; left:0; right:0; bottom:-10px; height:12px;
+  border:12px solid transparent;
+  border-image: conic-gradient(from 45deg, var(--air) 0 12.5%, #fff 0 25%, var(--accent) 0 37.5%, #fff 0 50%, var(--air) 0 62.5%, #fff 0 75%, var(--accent) 0 87.5%, #fff 0 100%) 1;
+}
 
-/* Hero */
-.hero{margin:14px auto 6px}
-.hero-card{background:var(--card);border-radius:24px;box-shadow:var(--shadow);overflow:hidden;position:relative}
-.hero-visual{
-  height:240px;
+/* Envelope hero */
+.wrap{max-width:980px;margin:auto;padding:16px}
+.hero{margin:16px auto 8px}
+.env{background:var(--paper);border-radius:22px;box-shadow:var(--shadow);overflow:hidden;position:relative}
+.env .cover{
+  height:230px;
   background:
-    linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,.15) 100%),
-    url('assets/hero-tainan.jpg') center/cover no-repeat; /* ← 換成你的封面圖 */
+    radial-gradient(60% 80% at 70% 30%, rgba(0,0,0,.06), transparent 60%),
+    url('assets/hero-tainan.jpg') center/cover no-repeat;
+  filter:saturate(.96) contrast(.98);
 }
-.hero-content{padding:18px}
-.h1{font-family:"Kosugi Maru","Noto Sans TC",sans-serif;font-size:clamp(22px,5.5vw,34px);font-weight:900}
-.sub{color:#5e5a56}
+.env .body{padding:18px}
+.h1{font-family:"Kosugi Maru","Noto Sans TC",sans-serif;font-weight:900;font-size:clamp(22px,5.8vw,34px)}
+.sub{color:#5e584f}
 .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-.btn{
-  border:none;cursor:pointer;font-weight:900;border-radius:14px;padding:14px 18px;font-size:clamp(15px,4vw,18px);
-  box-shadow:var(--shadow);transition:transform .05s ease
-}
-.btn:active{transform:translateY(1px)}
+.btn{border:none;cursor:pointer;font-weight:900;border-radius:14px;padding:14px 18px;font-size:clamp(15px,4vw,18px);box-shadow:var(--shadow)}
 .btn-primary{background:var(--accent);color:#fff}
 .btn-ghost{background:#fff;color:var(--accent);border:2px dashed var(--accent)}
 
-/* Intro overlay (姓名 + 開始） */
-.intro{
-  position:fixed; inset:0; background:rgba(0,0,0,.25); display:flex; align-items:center; justify-content:center; padding:18px;
-}
-.intro .panel{
-  max-width:520px;width:100%;background:var(--card);border-radius:22px;box-shadow:var(--shadow);padding:20px;
-}
-.intro h2{margin:0 0 10px}
-.intro .note{font-size:14px;color:#6d6863;margin-bottom:12px}
-.input{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.input input{
-  flex:1;min-width:160px;border:2px solid var(--soft);border-radius:12px;padding:12px 14px;font-size:16px;background:#fff
-}
+/* Progress ribbon (airmail look) */
+.map{margin:14px auto 0}
+.road{height:12px;background:#efe8da;border-radius:999px;overflow:hidden;box-shadow: inset 0 2px 6px rgba(0,0,0,.05)}
+.bar{height:100%;width:0%;transition:width .35s ease;
+  background: repeating-linear-gradient( 45deg, var(--air) 0 16px, #fff 16px 32px, var(--accent) 32px 48px, #fff 48px 64px); }
+.labels{display:flex;justify-content:space-between;font-size:13px;color:#6c655b;margin-top:6px}
+.save{display:none;margin-top:6px;color:#2e8b57;font-weight:900}
+.save.show{display:block}
 
-/* Progress map */
-.map{margin:16px auto}
-.map .road{height:12px;background:#EAE8E2;border-radius:999px;overflow:hidden;box-shadow: inset 0 2px 6px rgba(0,0,0,.05)}
-.map .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--sage),var(--honey),var(--blush));transition:width .35s ease}
-.map .labels{display:flex;justify-content:space-between;font-size:13px;color:#6d6863;margin-top:6px}
-.saveflag{display:none;margin-top:6px;color:#4CAF50;font-weight:900}
-.saveflag.show{display:block}
-
-/* Scene cards（劇情） */
+/* Scenes */
 .scene{display:none}
 .scene.active{display:block}
-.card{
-  background:var(--card);border-radius:22px;box-shadow:var(--shadow);padding:18px;margin:12px 0;position:relative;
-}
-.card h3{margin:0 0 6px;font-size:clamp(18px,4.6vw,22px);font-weight:900}
-.card .meta{color:#6b6762;margin-bottom:10px}
-.opts{display:grid;gap:10px}
-.opt{
-  background:#fff;border:2px solid transparent;border-radius:14px;padding:14px;text-align:left;font-weight:800;cursor:pointer;
-  box-shadow:0 6px 14px rgba(0,0,0,.06);transition:transform .08s ease,border-color .2s ease, box-shadow .2s ease
-}
-.opt:hover{transform:translateY(-2px)}
-.opt.selected{border-color:var(--accent);box-shadow:0 10px 22px rgba(0,0,0,.08)}
+.sec{background:var(--paper);border-radius:24px;box-shadow:var(--shadow);padding:18px;margin:12px 0;position:relative}
 
-/* 貼紙（每次選擇都掉一張） */
-.sticker{
-  position:absolute; right:12px; top:-12px; transform:rotate(-6deg); background:#fff; border-radius:10px; padding:8px 12px;
-  box-shadow:var(--shadow); font-family:"Caveat",cursive; font-size:20px;
+/* Stamp option cards */
+.stamps{display:grid;gap:12px}
+@media(min-width:900px){ .stamps{grid-template-columns:1fr 1fr} }
+.stamp{
+  position:relative;background:#fff;border-radius:14px;padding:14px;cursor:pointer;
+  box-shadow:0 10px 18px rgba(0,0,0,.08); transition:transform .08s ease, box-shadow .2s ease;
+  outline:10px dotted #ECE6D7; outline-offset:-8px;      /* 模擬齒孔邊 */
 }
-.sticker:before{
-  content:""; position:absolute; top:-10px; left:10px; right:10px; height:16px; border-radius:3px; opacity:.9;
-  background:repeating-linear-gradient(45deg,#f8e6a8,#f8e6a8 8px,rgba(0,0,0,.04) 8px,rgba(0,0,0,.04) 16px);
-}
-.stk-sage{background:var(--sage)} .stk-sky{background:var(--sky)} .stk-blush{background:var(--blush)}
+.stamp:hover{transform:translateY(-2px)}
+.stamp.selected{box-shadow:0 16px 26px rgba(0,0,0,.12)}
 
-/* 小愛心雨（選擇時） */
-.heart{position:fixed;pointer-events:none;animation:floatUp 1.2s ease forwards;font-size:18px;opacity:0}
-@keyframes floatUp{
-  0%{transform:translateY(0) scale(.9);opacity:0}
-  20%{opacity:1}
-  100%{transform:translateY(-120px) scale(1.2);opacity:0}
+/* postmark seal */
+.postmark{
+  position:absolute; left:10px; top:8px; width:86px; height:86px; border:2px solid rgba(47,93,168,.65);
+  border-radius:50%; transform:rotate(-12deg) scale(0.3); opacity:0; transition:transform .28s ease, opacity .28s ease;
 }
+.postmark:after{
+  content:"TAINAN • POST"; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:11px; color:rgba(47,93,168,.75); letter-spacing:1px;
+}
+.stamp.selected .postmark{opacity:1; transform:rotate(-12deg) scale(1)}
 
-/* Result ticket */
+/* tiny label sticker */
+.tag{display:inline-block;background:var(--sky);padding:6px 10px;border-radius:999px;font-weight:900;font-size:13px;margin-top:8px}
+.tag.blush{background:var(--blush)} .tag.sage{background:var(--sage)} .tag.honey{background:var(--honey)}
+
+/* Intro (name) */
+.intro{position:fixed; inset:0; background:rgba(0,0,0,.25); display:flex; align-items:center; justify-content:center; padding:18px}
+.panel{max-width:520px;width:100%;background:var(--paper);border-radius:22px;box-shadow:var(--shadow);padding:20px}
+.input{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.input input{flex:1;min-width:160px;border:2px solid var(--soft);border-radius:12px;padding:12px 14px;font-size:16px;background:#fff}
+
+/* Ticket (airmail boarding pass) */
 .ticket{display:none;background:linear-gradient(135deg,#fff,#fffef7);border-radius:24px;box-shadow:var(--shadow);padding:18px;margin:14px 0;position:relative;overflow:hidden}
 .ticket:before,.ticket:after{content:"";position:absolute;top:50%;width:22px;height:22px;background:var(--bg);border-radius:50%;transform:translateY(-50%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
 .ticket:before{left:-11px}.ticket:after{right:-11px}
-.t-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1px dashed rgba(0,0,0,.15);padding-bottom:10px;margin-bottom:10px}
+.thead{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1px dashed rgba(0,0,0,.15);padding-bottom:10px;margin-bottom:10px}
 .badge{background:var(--sage);padding:8px 12px;border-radius:14px;font-weight:900}
-.t-rows{display:grid;gap:10px;font-weight:800}
+.rows{display:grid;gap:10px;font-weight:800}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .row label{font-size:13px;color:#6b6762}
 .pill{background:var(--sky);padding:8px 12px;border-radius:999px}
-.pill.alt{background:var(--blush)}
-.pill.honey{background:var(--honey)}
-.share{
-  margin-top:12px; display:flex; gap:10px; flex-wrap:wrap
-}
+.pill.alt{background:var(--blush)} .pill.honey{background:var(--honey)}
+.share{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
 
-/* RWD 微調 */
-@media(min-width:900px){
-  .hero-visual{height:320px}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-}
+/* Heart confetti */
+.heart{position:fixed;pointer-events:none;animation:floatUp 1.2s ease forwards;font-size:18px;opacity:0}
+@keyframes floatUp{0%{transform:translateY(0) scale(.9);opacity:0}20%{opacity:1}100%{transform:translateY(-120px) scale(1.1);opacity:0}}
 </style>
 </head>
 <body>
-
-<header>
+<header class="airline">
   <div class="nav">
     <div class="brand">
-      <img src="assets/logo-jci.png" alt="logo"> <!-- ← 換成你的 logo；已放大 -->
-      <div class="t">台南小冒險 · 互動旅行</div>
+      <img src="assets/logo-jci.png" alt="logo">
+      <div class="t">跟著郵票去旅行 · 台南小冒險</div>
     </div>
     <div class="cta-top"><a href="#map">開始</a></div>
   </div>
 </header>
 
 <div class="wrap hero">
-  <div class="hero-card">
-    <div class="hero-visual"></div>
-    <div class="hero-content">
-      <div class="h1">今天，想帶妳去一場小小的冒險</div>
-      <div class="sub">不是問卷，而是會跟著妳的選擇前進的「互動故事」。每一步都會改變我們的台南路線，最後會生成一張屬於妳的冒險票券。</div>
+  <div class="env">
+    <div class="cover"></div>
+    <div class="body">
+      <div class="h1">嗨👋 一起跟著「郵票」走一場旅行吧</div>
+      <div class="sub">每一步都用「郵票卡」做選擇，點下去會蓋章；收集三枚郵票後，就會生成一張專屬的航空郵件票券。</div>
       <div class="actions">
         <button class="btn btn-primary" id="btnStart">立即開始</button>
         <button class="btn btn-ghost" id="btnHow">怎麼玩？</button>
@@ -167,266 +146,221 @@ header{
   </div>
 </div>
 
-<!-- 進度地圖 -->
+<!-- progress -->
 <div id="map" class="wrap map">
   <div class="road"><div class="bar" id="bar"></div></div>
-  <div class="labels"><span>第一站</span><span>第二站</span><span>最終驚喜</span></div>
-  <div class="saveflag" id="saveflag">已紀錄你的選擇 ✅</div>
+  <div class="labels"><span>一枚郵票</span><span>兩枚郵票</span><span>三枚完成</span></div>
+  <div class="save" id="save">已紀錄 ✅</div>
 </div>
 
-<!-- 劇情場景 -->
 <div class="wrap">
 
   <!-- Scene 1 -->
   <section class="scene active" id="s1">
-    <div class="card">
-      <div class="sticker stk-sage">Step 1</div>
-      <h3>🌇 老街岔路口</h3>
-      <p class="meta">夕陽把屋瓦染成金色。前面有三條路，妳牽著我的手，眼睛亮亮的看著我——</p>
-      <div class="opts">
-        <button class="opt" data-key="path" data-val="老宅咖啡｜文青散策">
-          走進老宅咖啡屋，找個窗邊的位置慢慢聊
-        </button>
-        <button class="opt" data-key="path" data-val="安平運河｜海風野餐">
-          往運河邊走吧，海風和草地準備好野餐墊了
-        </button>
-        <button class="opt" data-key="path" data-val="巷弄地圖｜插畫小店">
-          鑽進小巷，尋寶那家藏著插畫明信片的小店
-        </button>
+    <div class="sec">
+      <h3>① 選一枚「路線郵票」</h3>
+      <div class="stamps">
+        <div class="stamp" data-key="path" data-val="老宅咖啡 · 文青散策">
+          <div class="postmark"></div>
+          <div style="font-weight:900;">📮 老宅咖啡 · 文青散策</div>
+          <div style="font-size:14px;color:#6b655b;">窗邊座位＋黑白底片感小店</div>
+          <span class="tag sage">Old House</span>
+        </div>
+        <div class="stamp" data-key="path" data-val="安平運河 · 海風野餐">
+          <div class="postmark"></div>
+          <div style="font-weight:900;">📮 安平運河 · 海風野餐</div>
+          <div style="font-size:14px;color:#6b655b;">草地、夕陽、鹹鹹的風</div>
+          <span class="tag sky">Canal</span>
+        </div>
+        <div class="stamp" data-key="path" data-val="巷弄地圖 · 插畫小店">
+          <div class="postmark"></div>
+          <div style="font-weight:900;">📮 巷弄地圖 · 插畫小店</div>
+          <div style="font-size:14px;color:#6b655b;">尋寶明信片與手作章</div>
+          <span class="tag blush">Alley</span>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Scene 2 -->
   <section class="scene" id="s2">
-    <div class="card">
-      <div class="sticker stk-sky">Step 2</div>
-      <h3>🎒 今天的主角是？</h3>
-      <p class="meta">我們說好，今天的節奏只為妳而調。</p>
-      <div class="opts">
-        <button class="opt" data-key="focus" data-val="靜靜聊天｜找安靜角落">
-          我想好好聽妳說話，找個安靜角落慢慢聊
-        </button>
-        <button class="opt" data-key="focus" data-val="一起動手｜體驗工作坊">
-          一起動手做點什麼（拓印、手作甜點、或小小 DIY）
-        </button>
-        <button class="opt" data-key="focus" data-val="美照收藏｜拍攝任務">
-          幫妳拍幾張很美的照片，像把今天存進相簿
-        </button>
-        <button class="opt" data-key="focus" data-val="儀式收尾｜小卡驚喜">
-          結尾留一點儀式感，我準備了一張小卡片給妳
-        </button>
+    <div class="sec">
+      <h3>② 今天的主角重點</h3>
+      <div class="stamps">
+        <div class="stamp" data-key="focus" data-val="靜靜聊天 · 找安靜角落">
+          <div class="postmark"></div>
+          <div style="font-weight:900;">💬 靜靜聊天</div>
+          <div style="font-size:14px;color:#6b655b;">慢慢說，把今天留長一點</div>
+          <span class="tag honey">Talk</span>
+        </div>
+        <div class="stamp" data-key="focus" data-val="一起動手 · 體驗工作坊">
+          <div class="postmark"></div>
+          <div style="font-weight:900;">🧶 一起動手</div>
+          <div style="font-size:14px;color:#6b655b;">拓印、手作甜點或小小 DIY</div>
+          <span class="tag sage">Make</span>
+        </div>
+        <div class="stamp" data-key="focus" data-val="美照收藏 · 拍攝任務">
+          <div class="postmark"></div>
+          <div style="font-weight:900;">📸 美照收藏</div>
+          <div style="font-size:14px;color:#6b655b;">把妳拍得像雜誌</div>
+          <span class="tag blush">Photo</span>
+        </div>
+        <div class="stamp" data-key="focus" data-val="儀式收尾 · 小卡驚喜">
+          <div class="postmark"></div>
+          <div style="font-weight:900;">🎁 儀式收尾</div>
+          <div style="font-size:14px;color:#6b655b;">最後有一張寫給妳的小卡</div>
+          <span class="tag sky">Ritual</span>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- Scene 3 -->
   <section class="scene" id="s3">
-    <div class="card">
-      <div class="sticker stk-blush">Step 3</div>
-      <h3>🌙 收尾的方式</h3>
-      <p class="meta">夜色剛好。最後一個選擇，讓今天有個小小完美句點。</p>
-      <div class="opts">
-        <button class="opt" data-key="ending" data-val="運河夜景｜散步&手牽手">
-          去看運河夜景吧，就慢慢走、慢慢說
-        </button>
-        <button class="opt" data-key="ending" data-val="小食堂｜深夜鹹食">
-          巷口那間小食堂，點兩份心情剛好的宵夜
-        </button>
-        <button class="opt" data-key="ending" data-val="小卡片｜專屬留言">
-          把今天寫進一張小卡片，最後把它交到妳手心
-        </button>
+    <div class="sec">
+      <h3>③ 旅程的結尾方式</h3>
+      <div class="stamps">
+        <div class="stamp" data-key="ending" data-val="運河夜景 · 散步牽手">
+          <div class="postmark"></div>
+          <div style="font-weight:900;">🌙 運河夜景</div>
+          <div style="font-size:14px;color:#6b655b;">就慢慢走、慢慢說</div>
+          <span class="tag sky">Night Walk</span>
+        </div>
+        <div class="stamp" data-key="ending" data-val="小食堂 · 深夜鹹食">
+          <div class="postmark"></div>
+          <div style="font-weight:900;">🍜 小食堂</div>
+          <div style="font-size:14px;color:#6b655b;">兩份剛剛好的宵夜</div>
+          <span class="tag honey">Supper</span>
+        </div>
+        <div class="stamp" data-key="ending" data-val="小卡片 · 專屬留言">
+          <div class="postmark"></div>
+          <div style="font-weight:900;">💌 小卡片</div>
+          <div style="font-size:14px;color:#6b655b;">把今天寫進妳的口袋</div>
+          <span class="tag blush">Note</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 結果票券 -->
+  <!-- Ticket -->
   <section class="ticket" id="ticket">
-    <div class="t-head">
-      <h3 id="tkTitle">Tainan Mini Trip · 冒險票券</h3>
-      <div class="badge">完成！</div>
+    <div class="thead">
+      <h3 id="tkTitle">AIR MAIL · TAINAN BOARDING PASS</h3>
+      <div class="badge">完成 · POSTED ✈</div>
     </div>
-    <div class="t-rows">
-      <div class="row"><label>給誰：</label><span class="pill honey" id="tkName">妳</span></div>
+    <div class="rows">
+      <div class="row"><label>收件人：</label><span class="pill honey" id="tkName">妳</span></div>
       <div class="row"><label>路線：</label><span class="pill" id="tkPath">—</span></div>
-      <div class="row"><label>主角：</label><span class="pill alt" id="tkFocus">—</span></div>
-      <div class="row"><label>收尾：</label><span class="pill" id="tkEnding">—</span></div>
-      <div class="row"><label>小語：</label><span class="pill" id="tkMsg">把今天留給妳，其他交給我 💌</span></div>
+      <div class="row"><label>重點：</label><span class="pill alt" id="tkFocus">—</span></div>
+      <div class="row"><label>結尾：</label><span class="pill" id="tkEnding">—</span></div>
+      <div class="row"><label>小語：</label><span class="pill" id="tkMsg">把今天寄給妳，其他交給我。</span></div>
     </div>
     <div class="share">
-      <button class="btn btn-primary" id="btnReset">重新玩一次</button>
+      <button class="btn btn-primary" id="btnReset">再玩一次</button>
       <button class="btn btn-ghost" id="btnCopy">複製票券文字</button>
     </div>
   </section>
 
 </div>
 
-<!-- Intro：姓名輸入 -->
+<!-- Intro (name) -->
 <div class="intro" id="intro" aria-modal="true" role="dialog">
   <div class="panel">
-    <h2>嘿，先跟我說妳的名字吧</h2>
-    <div class="note">（或留空，直接開始也可以）</div>
+    <h3>先寫上妳的名字吧（可留空）</h3>
     <div class="input">
-      <input id="girlName" type="text" placeholder="輸入名字，例如 Nini" />
-      <button class="btn btn-primary" id="introStart">開始冒險</button>
+      <input id="girlName" type="text" placeholder="例如 Nini" />
+      <button class="btn btn-primary" id="introStart">開始</button>
     </div>
   </div>
 </div>
 
 <script>
-/* ========== 狀態 ========== */
-const state = {
-  name: "",
-  answers: { path:null, focus:null, ending:null },
-  step: 0, total: 3
-};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const state={name:"",step:0,total:3,answers:{path:null,focus:null,ending:null}};
 
-const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
+$("#btnHow").addEventListener("click",()=>alert("玩法：每一步用「郵票卡」做選擇，會出現蓋章動畫；集滿三枚，就生成航空郵件票券！"));
+$("#btnStart").addEventListener("click",()=>$("#intro").style.display="flex");
+$("#introStart").addEventListener("click",()=>{ state.name=($("#girlName").value||"").trim(); $("#intro").style.display="none"; go(1); });
 
-/* ========== 初始化 ========== */
-$("#btnStart").addEventListener("click", () => openIntro(true));
-$("#btnHow").addEventListener("click", () => alert("玩法：依照劇情選擇分支，每一步都有小互動。完成 3 步會生成專屬冒險票券！"));
-
-$("#introStart").addEventListener("click", () => {
-  state.name = ($("#girlName").value || "").trim();
-  $("#intro").style.display = "none";
-  goStep(1);
-});
-function openIntro(force=false){
-  $("#intro").style.display = "flex";
-  if(force){ $("#girlName").focus(); }
-}
-
-/* 允許從 Hero 的「開始」直接跳 intro */
-document.getElementById("btnStart").addEventListener("click", ()=>{});
-
-/* ========== 進度 & 場景切換 ========== */
-function goStep(n){
-  state.step = Math.max(0, Math.min(state.total, n));
-  // 切換 scene
-  $$(".scene").forEach(el => el.classList.remove("active"));
-  if(n>=1 && n<=3) $(`#s${n}`).classList.add("active");
-
-  // 進度條
-  const percent = ((n-1)/state.total)*100;
-  $("#bar").style.width = percent + "%";
-
-  // 清除票券
-  if(n<=3){ $("#ticket").style.display = "none"; }
-
-  // 捲動到進度區
+function go(n){
+  state.step=Math.max(0,Math.min(state.total,n));
+  $$(".scene").forEach(el=>el.classList.remove("active"));
+  if(n>=1&&n<=3) $(`#s${n}`).classList.add("active");
+  $("#bar").style.width=((n-1)/state.total*100)+"%";
+  if(n<=3) $("#ticket").style.display="none";
   document.getElementById("map").scrollIntoView({behavior:"smooth",block:"start"});
 }
+function next(){ state.step<state.total ? go(state.step+1) : showTicket(); }
 
-function nextStep(){
-  if(state.step < state.total) goStep(state.step + 1);
-  else showTicket();
-}
+$$(".stamp").forEach(card=>{
+  card.addEventListener("click",()=>{
+    // toggle visual
+    card.parentElement.querySelectorAll(".stamp").forEach(s=>s.classList.remove("selected"));
+    card.classList.add("selected");
 
-/* ========== 選項互動 ========== */
-$$(".opt").forEach(btn=>{
-  btn.addEventListener("click", ()=>{
-    // 視覺回饋
-    const parent = btn.parentElement;
-    parent.querySelectorAll(".opt").forEach(b => b.classList.remove("selected"));
-    btn.classList.add("selected");
+    // save
+    state.answers[card.dataset.key]=card.dataset.val;
+    $("#save").classList.add("show");
+    setTimeout(()=>$("#save").classList.remove("show"),800);
 
-    // 記錄
-    const key = btn.dataset.key;
-    const val = btn.dataset.val;
-    state.answers[key] = val;
+    // confetti
+    hearts();
 
-    // 小心動動畫
-    popHearts();
-
-    // 掛一張貼紙（隨機）
-    dropSticker(btn.closest(".card"));
-
-    // 顯示「已紀錄」
-    $("#saveflag").classList.add("show");
-    setTimeout(()=>$("#saveflag").classList.remove("show"), 800);
-
-    // 更新進度條（+1）
-    const next = Math.min(state.total, state.step + 1);
-    const percent = ((next-1)/state.total)*100;
-    $("#bar").style.width = percent + "%";
-
-    // 進入下一步（延遲一點點比較有節奏）
-    setTimeout(nextStep, 450);
+    // progress feel & next
+    const nextStep=Math.min(state.total,state.step+1);
+    $("#bar").style.width=((nextStep-1)/state.total*100)+"%";
+    setTimeout(next,420);
   });
 });
 
-/* ========== 動畫：愛心雨 ========== */
-function popHearts(){
-  const hearts = ["💗","💖","💝","✨","🌟"];
+function hearts(){
+  const arr=["💗","💌","✨","🌟","📮"];
   for(let i=0;i<5;i++){
-    const el = document.createElement("div");
-    el.className = "heart";
-    el.textContent = hearts[Math.floor(Math.random()*hearts.length)];
-    el.style.left = (20 + Math.random()*60) + "vw";
-    el.style.top = (50 + Math.random()*10) + "vh";
-    el.style.animationDelay = (i*0.05)+"s";
+    const el=document.createElement("div");
+    el.className="heart";
+    el.textContent=arr[Math.floor(Math.random()*arr.length)];
+    el.style.left=(20+Math.random()*60)+"vw";
+    el.style.top=(55+Math.random()*10)+"vh";
+    el.style.animationDelay=(i*0.05)+"s";
     document.body.appendChild(el);
-    setTimeout(()=>el.remove(), 1400);
+    setTimeout(()=>el.remove(),1300);
   }
 }
 
-/* ========== 動畫：貼紙掉落 ========== */
-function dropSticker(card){
-  const tag = document.createElement("div");
-  tag.className = "sticker " + ["stk-sage","stk-sky","stk-blush"][Math.floor(Math.random()*3)];
-  tag.textContent = ["nice!","cute!","yay!","sweet!","noted!"][Math.floor(Math.random()*5)];
-  // 放到卡片右上角，短暫顯示
-  card.appendChild(tag);
-  setTimeout(()=>{ tag.style.transition="transform .2s ease, opacity .2s ease"; tag.style.transform="translateY(6px) rotate(-2deg)"; }, 10);
-  setTimeout(()=> tag.remove(), 1200);
-}
-
-/* ========== 結果票券 ========== */
 function showTicket(){
-  // 進度條滿
-  $("#bar").style.width = "100%";
-  // 填資料
-  $("#tkName").textContent = state.name || "妳";
-  $("#tkPath").textContent = state.answers.path || "—";
-  $("#tkFocus").textContent = state.answers.focus || "—";
-  $("#tkEnding").textContent = state.answers.ending || "—";
-
-  // 小語生成（依照 focus 稍微客製）
-  let msg = "把今天留給妳，其他交給我 💌";
-  if(state.answers.focus?.includes("聊天")) msg = "我想聽妳說的每一句話，今晚屬於妳。";
-  if(state.answers.focus?.includes("動手")) msg = "一起做點什麼，讓回憶有溫度。";
-  if(state.answers.focus?.includes("美照")) msg = "把妳的笑，存成今天最好看的風景。";
-  if(state.answers.focus?.includes("儀式")) msg = "把心意寫進卡片，收在妳的口袋。";
-  $("#tkMsg").textContent = msg;
-
-  // 顯示
-  $("#ticket").style.display = "block";
+  $("#bar").style.width="100%";
+  $("#tkName").textContent=state.name||"妳";
+  $("#tkPath").textContent=state.answers.path||"—";
+  $("#tkFocus").textContent=state.answers.focus||"—";
+  $("#tkEnding").textContent=state.answers.ending||"—";
+  let msg="把今天寄給妳，其他交給我。";
+  if(state.answers.focus?.includes("聊天")) msg="想聽妳說的每一句，慢慢寄到我心裡。";
+  if(state.answers.focus?.includes("動手")) msg="一起做點什麼，把回憶蓋章收藏。";
+  if(state.answers.focus?.includes("美照")) msg="把妳的笑裝進底片，貼在今天這封信上。";
+  if(state.answers.focus?.includes("儀式")) msg="把心意寫進小卡，連同今晚一起寄出。";
+  $("#tkMsg").textContent=msg;
+  $("#ticket").style.display="block";
   $("#ticket").scrollIntoView({behavior:"smooth",block:"start"});
 }
 
-/* 重新 / 複製 */
-$("#btnReset").addEventListener("click", ()=>{
-  // 清狀態
-  state.answers = {path:null,focus:null,ending:null};
-  // 取消選中
-  $$(".opt").forEach(b=>b.classList.remove("selected"));
-  goStep(1);
+$("#btnReset").addEventListener("click",()=>{
+  state.answers={path:null,focus:null,ending:null};
+  $$(".stamp").forEach(s=>s.classList.remove("selected"));
+  go(1);
 });
-$("#btnCopy").addEventListener("click", ()=>{
-  const txt = `【台南小冒險票券】
-給：${state.name || "妳"}
-路線：${state.answers.path || "-"}
-主角：${state.answers.focus || "-"}
-收尾：${state.answers.ending || "-"}
+$("#btnCopy").addEventListener("click",()=>{
+  const txt=`【AIR MAIL · TAINAN BOARDING PASS】
+收件人：${state.name||"妳"}
+路線：${state.answers.path||"-"}
+重點：${state.answers.focus||"-"}
+結尾：${state.answers.ending||"-"}
 小語：${$("#tkMsg").textContent}
-— 走吧，今天只為妳而安排。`;
+— 寄給妳的小旅行。`;
   navigator.clipboard.writeText(txt).then(()=>alert("已複製票券內容！"));
 });
 
-/* 預設開場就彈出姓名輸入（更有「被邀請」的儀式感） */
-openIntro();
+// 預設打開儀式
+$("#intro").style.display="flex";
 </script>
 </body>
 </html>
