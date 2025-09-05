@@ -1,116 +1,88 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>我們的第一次旅行 💕</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>台南冒險開場 💕</title>
   <style>
-    body {
+    body, html {
       margin: 0;
+      padding: 0;
+      height: 100%;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(180deg, #ffe4ec, #fff);
+    }
+
+    .hero {
+      position: relative;
+      height: 100%;
+      background: url('your-photo.jpg') no-repeat center center/cover;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      height: 100vh;
-      overflow: hidden;
+      align-items: center;
       text-align: center;
+      color: white;
+      padding: 1rem;
     }
 
-    h1 {
-      font-size: 1.5rem;
-      color: #d6336c;
-      margin-bottom: 1rem;
-      padding: 0 1rem;
-    }
-
-    .card-container {
-      position: relative;
-      width: 260px;
-      height: 360px;
-    }
-
-    .card {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
+    .hero h1 {
+      font-size: 1.8rem;
       font-weight: bold;
-      color: #d6336c;
-      user-select: none;
-      transition: transform 0.3s ease, opacity 0.3s ease;
+      margin-bottom: 1rem;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
     }
 
-    .message {
-      margin-top: 1.5rem;
-      font-size: 1.2rem;
-      color: #333;
-      display: none;
+    .hero p {
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 320px;
+      margin-bottom: 2rem;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      opacity: 0;
+      animation: fadeIn 2s forwards;
+    }
+
+    .btn {
+      background: #d6336c;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: transform 0.2s ease, background 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      background: #e05285;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>今天是我們的第一次旅行 💕<br>妳想去哪裡呢？</h1>
-
-  <div class="card-container" id="cardContainer">
-    <div class="card" data-place="景點 B">景點 B</div>
-    <div class="card" data-place="景點 A">景點 A</div>
+  <div class="hero">
+    <h1>今天的台南，不是隨機，是屬於妳的冒險</h1>
+    <p>
+      妳做的每一個小選擇，都會悄悄改變我們的路線。<br>
+      沒有正確答案，只有想被妳發現的風景。<br>
+      因為有妳，台南才會變得不一樣。
+    </p>
+    <button class="btn" onclick="startAdventure()">開始冒險</button>
   </div>
 
-  <div class="message" id="message"></div>
-
   <script>
-    const container = document.getElementById("cardContainer");
-    const cards = document.querySelectorAll(".card");
-    let isDragging = false;
-    let startX, currentCard;
-
-    cards.forEach(card => {
-      card.addEventListener("touchstart", e => {
-        isDragging = true;
-        currentCard = card;
-        startX = e.touches[0].clientX;
-      });
-
-      card.addEventListener("touchmove", e => {
-        if (!isDragging) return;
-        const dx = e.touches[0].clientX - startX;
-        currentCard.style.transform = `translateX(${dx}px) rotate(${dx / 10}deg)`;
-      });
-
-      card.addEventListener("touchend", e => {
-        if (!isDragging) return;
-        isDragging = false;
-
-        const dx = e.changedTouches[0].clientX - startX;
-
-        if (dx > 100) {
-          // 右滑選擇
-          currentCard.style.transform = "translateX(500px) rotate(30deg)";
-          currentCard.style.opacity = 0;
-          showMessage(currentCard.dataset.place);
-        } else if (dx < -100) {
-          // 左滑放棄
-          currentCard.style.transform = "translateX(-500px) rotate(-30deg)";
-          currentCard.style.opacity = 0;
-        } else {
-          // 回到原位
-          currentCard.style.transform = "";
-        }
-      });
-    });
-
-    function showMessage(place) {
-      const msg = document.getElementById("message");
-      msg.innerText = `妳選擇了「${place}」，我已經幫妳安排好囉 💕`;
-      msg.style.display = "block";
+    function startAdventure() {
+      alert("接下來進入 Tinder 式互動選擇 🚀");
+      // 之後可改成跳轉或顯示下一頁互動
+      // window.location.href = "tinder.html";
     }
   </script>
 </body>
