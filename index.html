@@ -7,519 +7,404 @@
 <meta name="description" content="這不是普通的旅行，而是專屬妳的冒險。">
 <style>
   :root{
-    /* 色彩（日系霧面） */
-    --cream:#F7F4EF;         /* 奶油米白 */
-    --mist:#8FB8A8;          /* 霧湖綠 */
-    --wood:#9C7E68;          /* 木質棕 */
-    --ink:#333;              /* 墨黑 */
-    --muted:#6b6b6b;
+    /* Palette */
+    --cream:#F7F4EF;   /* 奶油米白 */
+    --sage:#8FB8A8;    /* 霧湖綠 */
+    --wood:#9C7E68;    /* 木質棕 */
+    --ink:#2f2f2f;     /* 墨黑 */
+    --muted:#6f6f6f;
+    --card:#ffffff;
+    --ring:rgba(143,184,168,.28);
 
-    --card:#FFFFFF;
-    --ring:rgba(143,184,168,.35);
-
-    /* 元件 */
-    --radius:18px;
-    --shadow:0 10px 24px rgba(0,0,0,.08);
-    --shadow-soft:0 6px 18px rgba(0,0,0,.06);
-    --focus:0 0 0 3px var(--ring);
+    /* UI */
+    --r-lg:20px; --r-md:14px; --r-sm:10px;
+    --shadow:0 12px 28px rgba(0,0,0,.06);
+    --shadow-soft:0 8px 20px rgba(0,0,0,.05);
     --tap:translateY(1px) scale(.99);
   }
 
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0;
-    font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color:var(--ink);
+    margin:0; color:var(--ink);
+    font-family: "Noto Sans TC","PingFang TC","Microsoft JhengHei",Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     background:
-      radial-gradient(1000px 700px at 100% -10%, #e8efe9 0%, rgba(232,239,233,0) 55%),
-      radial-gradient(800px 600px at -10% 20%, #f1eee9 0%, rgba(241,238,233,0) 55%),
+      radial-gradient(1100px 680px at 110% -10%, #e7eee9 0%, rgba(231,238,233,0) 55%),
+      radial-gradient(900px 600px at -10% 15%, #efece6 0%, rgba(239,236,230,0) 55%),
       var(--cream);
   }
+  .wrap{max-width:780px;margin:0 auto;padding:14px 14px 100px}
 
-  .wrap{max-width:720px;margin:0 auto;padding:16px 16px 28px}
+  /* Hero */
+  .hero{
+    position:relative;height:160px;border-radius:var(--r-lg);overflow:hidden;
+    background:#d1ddd6; box-shadow:var(--shadow-soft);
+  }
+  .hero::before{
+    /* 封面圖占位：可換成你的巷弄/咖啡廳照 */
+    content:""; position:absolute; inset:0;
+    background:url('https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?q=80&w=1600&auto=format&fit=crop') center/cover;
+    filter:saturate(.85) contrast(.98);
+  }
+  .hero::after{
+    /* 霧面遮罩 */
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(247,244,239,.35), rgba(247,244,239,.75) 65%, rgba(247,244,239,.95));
+    backdrop-filter: blur(2px);
+  }
+  .hero-tag{
+    position:absolute; left:14px; bottom:14px;
+    background:#fff; color:#4a5f55; border:1px solid #e7efe9;
+    padding:8px 12px; border-radius:12px; display:inline-flex; gap:8px; align-items:center;
+    box-shadow:var(--shadow-soft); font-weight:600;
+  }
+  .hero-tag svg{width:18px;height:18px}
 
-  header{
-    display:flex;gap:12px;align-items:center;justify-content:flex-start;
-    padding:8px 4px 12px;
-  }
-  .sticker{
-    width:44px;height:44px;border-radius:12px;flex:0 0 auto;
-    display:grid;place-items:center;
-    background: conic-gradient(from 210deg at 50% 50%, #bcd6c9, #f4ede6);
-    box-shadow: var(--shadow-soft);
-    position:relative; overflow:hidden;
-  }
-  .sticker::after{
-    content:"✦"; font-size:18px; color:#557a6a;
-  }
-  h1{font-size:22px;margin:0 0 2px 0;letter-spacing:.5px}
-  .subtitle{color:var(--muted);font-size:13px;margin:0}
+  /* Header */
+  header{display:flex; align-items:flex-end; justify-content:space-between; margin:12px 2px 10px}
+  h1{margin:0; font-size:22px; letter-spacing:.3px}
+  .sub{margin:2px 0 0; color:var(--muted); font-size:13px}
 
-  /* 進度條 */
-  .progress{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 2px 18px;
+  /* Progress */
+  .progress{display:flex; align-items:center; gap:10px; padding:8px 2px 0}
+  .p-dot{
+    width:10px;height:10px; border-radius:999px; background:#dfe4e0; position:relative; overflow:hidden;
   }
-  .step{
-    height:8px;border-radius:999px;background:#E5E7E9;position:relative;overflow:hidden;
-  }
-  .step[data-active="true"]{background:#dfe8e3}
-  .step > i{
-    position:absolute;inset:0;width:0%;background:linear-gradient(90deg,#b6d2c3,#8FB8A8);
-    transition:width .3s ease;
-  }
+  .p-dot[data-active="true"]{background:#cfe0d7; box-shadow:0 0 0 3px var(--ring) inset}
+  .p-line{flex:1; height:2px; background:#e8ece9; border-radius:999px; overflow:hidden; position:relative}
+  .p-line i{position:absolute; left:0; top:0; height:100%; width:0%; background:linear-gradient(90deg,#b6d2c3,#8FB8A8); transition:width .2s ease}
 
-  /* 卡片容器 */
+  /* Card */
   .card{
-    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;
-    animation:fadeIn .25s ease;
+    margin-top:14px; background:var(--card); border-radius:var(--r-lg);
+    box-shadow:var(--shadow); padding:14px;
+    animation:fade .18s ease;
   }
-  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
 
-  /* 選項格（手機自動換行） */
-  .grid{display:flex;flex-wrap:wrap;gap:10px}
+  /* Grid chips */
+  .grid{display:flex; flex-wrap:wrap; gap:10px}
   .chip{
-    appearance:none;border:none;background:#fff;border:1px solid #eceaea;
-    padding:12px 14px;border-radius:14px;cursor:pointer;
-    box-shadow:0 2px 0 rgba(0,0,0,.03);
-    transition:.15s;
-    font-size:15px; line-height:1;
+    appearance:none; border:none; background:#fff; border:1px solid #ecebea;
+    padding:12px 14px; border-radius:16px; cursor:pointer;
+    display:inline-flex; gap:8px; align-items:center;
+    box-shadow:0 1px 0 rgba(0,0,0,.03);
+    transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    min-height:48px;
   }
   .chip:active{transform:var(--tap)}
+  .chip svg{width:18px;height:18px; opacity:.9}
   .chip[data-selected="true"]{
-    background:linear-gradient(180deg,#fff,#f2f7f4);
-    border-color:#dfe9e4; box-shadow:0 8px 16px var(--ring);
-    color:#365a4b;
+    background:linear-gradient(180deg,#fff,#f3f7f5);
+    border-color:#dfe9e4; color:#365a4b; box-shadow:0 10px 18px var(--ring);
   }
-  .chip[aria-pressed="true"]{outline:var(--focus)}
 
-  /* 按鈕 */
+  /* Bottom action bar: 拇指可點 */
+  .bar{
+    position:fixed; left:0; right:0; bottom:0; background:rgba(247,244,239,.88);
+    backdrop-filter: blur(6px); border-top:1px solid #eae5de; padding:10px 12px;
+  }
+  .bar-inner{max-width:780px; margin:0 auto; display:flex; gap:10px}
   .btn{
-    display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    padding:14px 16px;border-radius:16px;border:1px solid transparent;cursor:pointer;
-    font-weight:600; letter-spacing:.3px; min-height:48px; width:100%;
-    transition:.15s; user-select:none;
+    flex:1; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:14px; border-radius:16px; border:1px solid transparent; cursor:pointer;
+    font-weight:700; letter-spacing:.3px; min-height:50px; user-select:none; transition:.12s ease;
   }
   .btn:active{transform:var(--tap)}
-  .btn.primary{background:linear-gradient(180deg,#a8cbbb,#8FB8A8); color:#0f3025; box-shadow:0 12px 24px var(--ring)}
-  .btn.ghost{background:#fff;border-color:#e8e3dd;color:#6a5a4f}
-  .btn.wood{background:linear-gradient(180deg,#b4957f,#9C7E68);color:#fff}
-  .btn.row{display:flex}
-  .btn.icon{width:48px;padding:0}
+  .btn.primary{background:linear-gradient(180deg,#a9cbbb,#8FB8A8); color:#0c2f24; box-shadow:0 10px 22px var(--ring)}
+  .btn.ghost{background:#fff; color:#6a5a4f; border-color:#eadfd4}
+  .btn.wood{background:linear-gradient(180deg,#b9967f,#9C7E68); color:#fff}
 
-  .row{display:flex;gap:10px;align-items:center}
-  .space{height:12px}
+  .hint{font-size:13px; color:#566b62; background:#f4f8f6; border:1px dashed #d7e6df; padding:10px; border-radius:12px; margin-top:10px}
 
-  /* 淡提示 */
-  .hint{font-size:13px;color:#566b62;background:#f4f8f6;border:1px dashed #d7e6df;padding:10px;border-radius:12px}
-
-  /* 結果卡 */
-  .result-line{margin:6px 0}
-  .quote{
-    background:#fffdf7;border:1px solid #f0e8d9;color:#6b4f2e;border-radius:14px;padding:12px;margin-top:8px
-  }
+  /* Result */
+  .quote{background:#fffdf7; border:1px solid #f0e8d9; color:#6b4f2e; border-radius:16px; padding:12px; margin-top:10px}
+  .res-line{margin:6px 0}
   .heart{
-    width:54px;height:54px;border-radius:50%;display:grid;place-items:center;cursor:pointer;margin:4px auto 0;
-    background:#fff; border:1px solid #e8e3dd; box-shadow:var(--shadow-soft);
-    transition:.15s;
+    width:56px;height:56px;border-radius:50%;display:grid;place-items:center;margin:10px auto 0;
+    background:#fff; border:1px solid #e8e3dd; box-shadow:var(--shadow-soft); cursor:pointer; transition:.12s ease;
   }
-  .heart:active{transform:var(--tap)}
-  .heart[data-on="true"]{background:#ffe9ed;border-color:#ffd1da}
+  .heart[data-on="true"]{background:#ffe9ed; border-color:#ffd1da}
   .toast{
-    position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
-    background:#1f1f1f;color:#fff;padding:10px 14px;border-radius:12px;
-    box-shadow:0 14px 28px rgba(0,0,0,.28);opacity:0;transition:.2s;z-index:9999;font-size:13px
+    position:fixed; left:50%; bottom:22px; transform:translateX(-50%);
+    background:#1f1f1f; color:#fff; padding:10px 14px; border-radius:12px; opacity:0; transition:.18s; z-index:9999; font-size:13px
   }
 
-  /* 無障礙 */
-  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-
-  /* RWD */
-  @media(min-width:560px){
-    h1{font-size:24px}
-  }
-
+  /* a11y */
+  .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
 </style>
 </head>
 <body>
-  <div class="wrap" role="application" aria-label="台南浪漫冒險解鎖互動頁">
+  <div class="wrap">
+    <!-- HERO -->
+    <div class="hero" role="img" aria-label="台南巷弄與咖啡廳氛圍圖">
+      <div class="hero-tag" aria-hidden="true">
+        <!-- 手寫貼紙風 icon -->
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 15.9 7.2 18l.9-5.4L4.2 8.7l5.4-.8L12 3z" stroke="#6a9886" stroke-width="1.2"/></svg>
+        <span>專屬妳的冒險</span>
+      </div>
+    </div>
+
+    <!-- Header -->
     <header>
-      <div class="sticker" aria-hidden="true"></div>
       <div>
         <h1>台南浪漫冒險解鎖</h1>
-        <p class="subtitle">這不是普通的旅行，而是專屬妳的冒險。</p>
+        <p class="sub">這不是普通的旅行，而是屬於妳的 1 分鐘小選擇。</p>
       </div>
     </header>
 
-    <!-- 進度條（開場不算，共 4 段） -->
+    <!-- Progress -->
     <div class="progress" aria-label="進度指示" aria-live="polite">
-      <div class="step" data-step="1" aria-hidden="true"><i></i></div>
-      <div class="step" data-step="2" aria-hidden="true"><i></i></div>
-      <div class="step" data-step="3" aria-hidden="true"><i></i></div>
-      <div class="step" data-step="4" aria-hidden="true"><i></i></div>
+      <div class="p-dot" data-step="1"></div>
+      <div class="p-line"><i id="pline"></i></div>
+      <div class="p-dot" data-step="2"></div>
+      <div class="p-line"><i></i></div>
+      <div class="p-dot" data-step="3"></div>
+      <div class="p-line"><i></i></div>
+      <div class="p-dot" data-step="4"></div>
     </div>
 
-    <!-- 卡片容器 -->
+    <!-- SCREEN 容器 -->
     <main id="panel" class="card" tabindex="-1" aria-live="polite">
-      <!-- 0. 開場卡 -->
+      <!-- Welcome -->
       <section data-screen="welcome">
         <h2 class="sr-only">開場</h2>
-        <div class="hint" style="margin-bottom:10px">
-          日記本翻開的一天：妳做的每一個小選擇，都會悄悄改變我們的路線。沒有正確答案，只有想被妳發現的風景。
-        </div>
-        <p style="margin:10px 0 16px">因為有妳，台南才會變得不一樣。</p>
-        <button class="btn primary" data-action="start">開始解鎖</button>
+        <p class="hint">妳做的每一個小選擇，都會悄悄改變我們的路線。沒有正確答案，只有等妳發現的風景。</p>
+        <p style="margin:12px 0 0">因為有妳，台南才會變得不一樣。</p>
       </section>
 
-      <!-- 1. 主題選擇 -->
+      <!-- Step 1 主題 -->
       <section data-screen="step1" hidden>
-        <h2 style="margin:0 0 6px">今天最想展開的文青場景是？</h2>
+        <h3 style="margin:0 0 8px">今天最想展開的文青場景是？</h3>
         <div class="grid" role="group" aria-label="文青場景選擇">
-          <button class="chip" data-value="奇美博物館 🎨（展覽＋藝術＋拍照）">A. 奇美博物館 🎨</button>
-          <button class="chip" data-value="孔廟老街 🏮（歷史氛圍＋特色小店）">B. 孔廟老街 🏮</button>
-          <button class="chip" data-value="十鼓糖廠 🌙（工業遺跡＋夜間燈光）">C. 十鼓糖廠 🌙</button>
-          <button class="chip" data-value="交給你安排 🎁">交給你安排 🎁</button>
+          <button class="chip" data-value="奇美博物館 🎨（展覽＋藝術＋拍照）" data-icon="🎨"><span>🎨</span>奇美博物館</button>
+          <button class="chip" data-value="孔廟老街 🏮（歷史氛圍＋特色小店）" data-icon="🏮"><span>🏮</span>孔廟老街</button>
+          <button class="chip" data-value="十鼓糖廠 🌙（工業遺跡＋夜間燈光）" data-icon="🌙"><span>🌙</span>十鼓糖廠</button>
+          <button class="chip" data-value="交給你安排 🎁" data-icon="🎁"><span>🎁</span>交給你安排</button>
         </div>
-        <div class="space"></div>
-        <p id="fb1" class="hint" aria-live="polite" style="display:none"></p>
-        <div class="space"></div>
-        <div class="row">
-          <button class="btn ghost" data-skip="1" aria-label="跳過此步驟">跳過</button>
-          <button class="btn primary" data-next="1" disabled>下一步</button>
-        </div>
+        <p id="fb1" class="hint" style="display:none; margin-top:10px"></p>
       </section>
 
-      <!-- 2. 食物 / 飲品偏好 -->
+      <!-- Step 2 食物/飲品 -->
       <section data-screen="step2" hidden>
-        <h2 style="margin:0 0 6px">旅程裡，妳最想把哪個味道寫進今天？</h2>
+        <h3 style="margin:0 0 8px">旅程裡，妳最想把哪個味道寫進今天？</h3>
         <div class="grid" role="group" aria-label="食物與飲品偏好">
-          <button class="chip" data-value="台南小吃 🍜（牛肉湯/擔仔麵/棺材板）">A. 台南小吃 🍜</button>
-          <button class="chip" data-value="老咖啡廳 ☕（老宅的手沖與木質香）">B. 老咖啡廳 ☕</button>
-          <button class="chip" data-value="甜點或冰品 🍧（可愛療癒一下）">C. 甜點或冰品 🍧</button>
-          <button class="chip" data-value="交給你安排 🎁（我想要驚喜）">D. 交給你安排 🎁</button>
+          <button class="chip" data-value="台南小吃 🍜（牛肉湯/擔仔麵/棺材板）"><span>🍜</span>台南小吃</button>
+          <button class="chip" data-value="老咖啡廳 ☕（老宅的手沖與木質香）"><span>☕</span>老咖啡廳</button>
+          <button class="chip" data-value="甜點或冰品 🍧（可愛療癒一下）"><span>🍧</span>甜點或冰品</button>
+          <button class="chip" data-value="交給你安排 🎁（我想要驚喜）"><span>🎁</span>交給你安排</button>
         </div>
-        <div class="space"></div>
-        <p id="fb2" class="hint" aria-live="polite" style="display:none"></p>
-        <div class="space"></div>
-        <div class="row">
-          <button class="btn ghost" data-back="2">上一步</button>
-          <button class="btn wood" data-random="2" aria-label="隨機小驚喜">隨機選擇</button>
-          <button class="btn primary" data-next="2" disabled>下一步</button>
-        </div>
+        <p id="fb2" class="hint" style="display:none; margin-top:10px"></p>
       </section>
 
-      <!-- 3. 咖啡廳氛圍 -->
+      <!-- Step 3 咖啡廳氛圍 -->
       <section data-screen="step3" hidden>
-        <h2 style="margin:0 0 6px">休息的時候，我們要坐在哪個角落？</h2>
+        <h3 style="margin:0 0 8px">休息的時候，我們要坐在哪個角落？</h3>
         <div class="grid" role="group" aria-label="咖啡廳氛圍">
-          <button class="chip" data-value="KKOBA Apartment（文青簡約、安靜聊天）">A. KKOBA Apartment</button>
-          <button class="chip" data-value="草木森花（老宅＋花藝感）">B. 草木森花</button>
-          <button class="chip" data-value="鹽埕老咖啡廳群（隨機挑一家）">C. 鹽埕老咖啡廳群</button>
-          <button class="chip" data-value="可愛甜點風咖啡（繽紛療癒）">D. 可愛甜點風咖啡</button>
-          <button class="chip" data-value="交給你安排（想看你的小任性）">E. 交給你安排</button>
+          <button class="chip" data-value="KKOBA Apartment（文青簡約、安靜聊天）"><span>🏠</span>KKOBA Apartment</button>
+          <button class="chip" data-value="草木森花（老宅＋花藝感）"><span>🌿</span>草木森花</button>
+          <button class="chip" data-value="鹽埕老咖啡廳群（隨機挑一家）"><span>🏚️</span>鹽埕老咖啡廳群</button>
+          <button class="chip" data-value="可愛甜點風咖啡（繽紛療癒）"><span>🍰</span>可愛甜點風</button>
+          <button class="chip" data-value="交給你安排（想看你的小任性）"><span>✨</span>交給你安排</button>
         </div>
-        <div class="space"></div>
-        <p id="fb3" class="hint" aria-live="polite" style="display:none"></p>
-        <div class="space"></div>
-        <div class="row">
-          <button class="btn ghost" data-back="3">上一步</button>
-          <button class="btn wood" data-random="3">隨機選擇</button>
-          <button class="btn primary" data-next="3" disabled>前往彩蛋</button>
-        </div>
+        <p id="fb3" class="hint" style="display:none; margin-top:10px"></p>
       </section>
 
-      <!-- 4. （可選）浪漫收尾彩蛋 -->
+      <!-- Step 4 彩蛋 -->
       <section data-screen="step4" hidden>
-        <h2 style="margin:0 0 6px">今天的畫面，要怎麼留？</h2>
+        <h3 style="margin:0 0 8px">今天的畫面，要怎麼留？</h3>
         <div class="grid" role="group" aria-label="浪漫收尾">
-          <button class="chip" data-value="風景照 🌆">A. 風景照 🌆</button>
-          <button class="chip" data-value="我們的合照 📸">B. 我們的合照 📸</button>
-          <button class="chip" data-value="只有我們懂的私密畫面 💌">C. 私密畫面 💌</button>
-          <button class="chip" data-value="遇見了再說">D. 先不想，遇見了再說</button>
+          <button class="chip" data-value="風景照 🌆"><span>🌆</span>風景照</button>
+          <button class="chip" data-value="我們的合照 📸"><span>📸</span>我們的合照</button>
+          <button class="chip" data-value="只有我們懂的私密畫面 💌"><span>💌</span>私密畫面</button>
+          <button class="chip" data-value="遇見了再說"><span>🌟</span>遇見了再說</button>
         </div>
-        <div class="space"></div>
-        <p id="fb4" class="hint" aria-live="polite" style="display:none"></p>
-        <div class="space"></div>
-        <div class="row">
-          <button class="btn ghost" data-back="4">上一步</button>
-          <button class="btn primary" data-finish>完成解鎖</button>
-        </div>
+        <p id="fb4" class="hint" style="display:none; margin-top:10px"></p>
       </section>
 
-      <!-- 5. 結果卡 -->
+      <!-- 結果 -->
       <section data-screen="result" hidden>
-        <h2 style="margin:0 0 6px">解鎖完成！今天的台南，因妳而定義</h2>
-        <div id="summary" class="quote" aria-live="polite">
-          <!-- 動態摘要填入 -->
-        </div>
-        <div class="space"></div>
+        <h3 style="margin:0 0 8px">解鎖完成！今天的台南，因妳而定義</h3>
+        <div id="summary" class="quote" aria-live="polite"></div>
         <div class="heart" role="button" aria-label="點擊愛心" tabindex="0"><span aria-hidden="true">❤</span></div>
         <p style="text-align:center;color:var(--muted);font-size:13px">點愛心看看</p>
-        <div class="space"></div>
-        <div class="row">
-          <button class="btn wood" id="share">分享文字</button>
-          <button class="btn ghost" id="copy">複製全文</button>
-        </div>
-        <div class="space"></div>
-        <button class="btn primary" id="restart">再玩一次</button>
       </section>
     </main>
   </div>
 
-  <script>
-    // ====== 文案池（回饋） ======
-    const feedbacks = {
-      step1: [
-        "那裡的光影，會很適合妳的笑容。",
-        "時間慢下來，正好讓我多看妳一眼。",
-        "在燈光下，我想和妳靠近一點。"
-      ],
-      step2: [
-        "台南的日常，加上妳，就變成獨一無二的味道。",
-        "老宅裡的溫度，不如妳的一句話暖。",
-        "甜點可以吃，但最甜的是這趟旅程。",
-        "驚喜準備好，就等妳的笑容來揭曉。"
-      ],
-      step3: [
-        "那就把下午光，留在杯緣上。",
-        "花開在桌上，溫柔在心裡。",
-        "尋找只屬於今天的小確幸。",
-        "可愛，是今天的關鍵字。",
-        "了解，我會把妳的笑容放進座位表。"
-      ],
-      step4: [
-        "這光好像在等我們。",
-        "那些只屬於我們的瞬間，我會小心收藏。"
-      ]
-    };
+  <!-- 底部操作列 -->
+  <div class="bar" role="navigation" aria-label="操作列">
+    <div class="bar-inner">
+      <button class="btn ghost" id="btnBack">上一步</button>
+      <button class="btn wood" id="btnRandom">隨機</button>
+      <button class="btn primary" id="btnNext">下一步</button>
+    </div>
+  </div>
 
-    // ====== 狀態儲存 ======
-    const state = { step: 0, picks: {} };
+<script>
+  // 文案回饋
+  const FB = {
+    step1:[
+      "那裡的光影，會很適合妳的笑容。",
+      "時間慢下來，正好讓我多看妳一眼。",
+      "在燈光下，我想和妳靠近一點。"
+    ],
+    step2:[
+      "台南的日常，加上妳，就變成獨一無二的味道。",
+      "老宅裡的溫度，不如妳的一句話暖。",
+      "甜點可以吃，但最甜的是這趟旅程。",
+      "驚喜準備好，就等妳的笑容來揭曉。"
+    ],
+    step3:[
+      "那就把下午光，留在杯緣上。",
+      "花開在桌上，溫柔在心裡。",
+      "尋找只屬於今天的小確幸。",
+      "可愛，是今天的關鍵字。"
+    ],
+    step4:[
+      "這光好像在等我們。",
+      "那些只屬於我們的瞬間，我會小心收藏。"
+    ]
+  };
 
-    // ====== 元素快取 ======
-    const panel = document.getElementById('panel');
-    const stepsBars = [...document.querySelectorAll('.step')];
+  const panel = document.getElementById('panel');
+  const btnBack = document.getElementById('btnBack');
+  const btnNext = document.getElementById('btnNext');
+  const btnRandom = document.getElementById('btnRandom');
+  const pline = document.getElementById('pline');
 
-    // ====== 工具 ======
-    const rand = arr => arr[Math.floor(Math.random()*arr.length)];
-    const showToast = (msg)=>{
-      const t = document.createElement('div');
-      t.className = 'toast'; t.textContent = msg;
-      document.body.appendChild(t);
-      requestAnimationFrame(()=>t.style.opacity='1');
-      setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(), 180)}, 1400);
-    };
+  const state = { step:0, picks:{} }; // 0 welcome, 1..4 steps, 5 result
+  const sections = {
+    welcome: qs('[data-screen="welcome"]'),
+    step1: qs('[data-screen="step1"]'),
+    step2: qs('[data-screen="step2"]'),
+    step3: qs('[data-screen="step3"]'),
+    step4: qs('[data-screen="step4"]'),
+    result: qs('[data-screen="result"]'),
+  };
 
-    function setProgress(toIndex){
-      // toIndex: 1..4
-      stepsBars.forEach((bar,i)=>{
-        const idx = i+1;
-        const fill = bar.querySelector('i');
-        if(idx < toIndex){ bar.dataset.active="true"; fill.style.width = "100%"; }
-        else if(idx === toIndex){ bar.dataset.active="true"; fill.style.width="50%"; }
-        else { bar.dataset.active="false"; fill.style.width="0%"; }
+  function qs(s,root=document){ return root.querySelector(s); }
+  function qsa(s,root=document){ return [...root.querySelectorAll(s)]; }
+  const rand = arr => arr[Math.floor(Math.random()*arr.length)];
+  const toast = (m)=>{
+    const t=document.createElement('div'); t.className='toast'; t.textContent=m;
+    document.body.appendChild(t); requestAnimationFrame(()=>t.style.opacity=1);
+    setTimeout(()=>{t.style.opacity=0; setTimeout(()=>t.remove(),180)},1400);
+  };
+
+  function setProgress(){
+    // 填第一段線條百分比（其餘純點）
+    const p = Math.min(Math.max(state.step,1),4);
+    qsa('.p-dot').forEach((d,i)=> d.dataset.active = (i < p) ? 'true' : 'false');
+    pline.style.width = ((p-1)/3)*100 + '%';
+  }
+
+  function show(name){
+    Object.values(sections).forEach(s=> s.hidden = true);
+    sections[name].hidden = false;
+    panel.focus();
+  }
+
+  function toStep(n){
+    state.step = n;
+    setProgress();
+    if(n===0){ show('welcome'); btnBack.textContent='上一步'; btnNext.textContent='開始'; return; }
+    show('step'+n);
+    btnBack.textContent = n===1 ? '返回' : '上一步';
+    btnNext.textContent = n<4 ? '下一步' : '完成';
+  }
+
+  // Welcome -> Step1
+  toStep(1);
+
+  // 綁定 chips 行為（單選）
+  ['step1','step2','step3','step4'].forEach(key=>{
+    const sec = sections[key];
+    const chips = qsa('.chip', sec);
+    const fb = qs('#'+key.replace('step','fb'), panel);
+
+    chips.forEach(ch=>{
+      ch.addEventListener('click', ()=>{
+        chips.forEach(c=> c.dataset.selected='false');
+        ch.dataset.selected='true';
+        state.picks[key] = ch.dataset.value;
+        if(fb){ fb.style.display='block'; fb.textContent = rand(FB[key]); }
       });
-    }
-
-    function switchScreen(name){
-      [...panel.children].forEach(sec=>{
-        if(sec.dataset && sec.dataset.screen){
-          sec.hidden = sec.dataset.screen !== name;
-        }
-      });
-      panel.focus();
-    }
-
-    function selectChip(groupSection, chip){
-      // 單選，清其他
-      groupSection.querySelectorAll('.chip').forEach(c=>c.dataset.selected="false");
-      chip.dataset.selected="true";
-    }
-
-    function getSelectedValue(section){
-      const chip = section.querySelector('.chip[data-selected="true"]');
-      return chip ? chip.dataset.value : "";
-    }
-
-    function enableNext(section, enabled){
-      const btn = section.querySelector('[data-next]');
-      if(btn) btn.disabled = !enabled;
-    }
-
-    // ====== 綁定事件：開場 ======
-    panel.querySelector('[data-action="start"]').addEventListener('click', ()=>{
-      state.step = 1;
-      switchScreen('step1');
-      setProgress(1);
     });
+  });
 
-    // ====== Step1 綁定 ======
-    (function(){
-      const sec = panel.querySelector('[data-screen="step1"]');
-      const chips = sec.querySelectorAll('.chip');
-      const fb = document.getElementById('fb1');
+  // 底部操作列：上一頁/隨機/下一頁
+  btnBack.addEventListener('click', ()=>{
+    if(state.step<=1){ toStep(1); return; }
+    toStep(state.step-1);
+  });
 
-      chips.forEach(ch=>{
-        ch.addEventListener('click', ()=>{
-          selectChip(sec, ch);
-          enableNext(sec, true);
-          fb.style.display = 'block';
-          fb.textContent = rand(feedbacks.step1);
-          state.picks.step1 = ch.dataset.value;
-        });
-      });
-      sec.querySelector('[data-next]').addEventListener('click', ()=>{
-        state.step = 2;
-        switchScreen('step2'); setProgress(2);
-      });
-      sec.querySelector('[data-skip]').addEventListener('click', ()=>{
-        state.picks.step1 = "交給你安排 🎁";
-        state.step = 2; switchScreen('step2'); setProgress(2);
-      });
-    })();
+  btnRandom.addEventListener('click', ()=>{
+    const key = 'step'+state.step;
+    const sec = sections[key];
+    const chips = qsa('.chip', sec);
+    if(!chips.length) return;
+    const pick = rand(chips); pick.click();
+    toast('替妳抽了一個小驚喜');
+  });
 
-    // ====== Step2 綁定 ======
-    (function(){
-      const sec = panel.querySelector('[data-screen="step2"]');
-      const chips = sec.querySelectorAll('.chip');
-      const fb = document.getElementById('fb2');
+  btnNext.addEventListener('click', ()=>{
+    if(state.step<4){ toStep(state.step+1); return; }
+    // 完成，生成結果
+    buildResult(); show('result'); btnBack.textContent='重來'; btnNext.textContent='複製'; setProgressDone();
+  });
 
-      chips.forEach(ch=>{
-        ch.addEventListener('click', ()=>{
-          selectChip(sec, ch);
-          enableNext(sec, true);
-          fb.style.display = 'block';
-          fb.textContent = rand(feedbacks.step2);
-          state.picks.step2 = ch.dataset.value;
-        });
-      });
-      sec.querySelector('[data-next]').addEventListener('click', ()=>{
-        state.step = 3; switchScreen('step3'); setProgress(3);
-      });
-      sec.querySelector('[data-back]').addEventListener('click', ()=>{
-        state.step = 1; switchScreen('step1'); setProgress(1);
-      });
-      sec.querySelector('[data-random]').addEventListener('click', ()=>{
-        const all = [...chips];
-        const pick = all[Math.floor(Math.random()*all.length)];
-        pick.click(); showToast("已為妳抽一個小驚喜");
-      });
-    })();
+  // 完成後：進度滿
+  function setProgressDone(){
+    qsa('.p-dot').forEach(d=> d.dataset.active='true');
+    pline.style.width = '100%';
+  }
 
-    // ====== Step3 綁定 ======
-    (function(){
-      const sec = panel.querySelector('[data-screen="step3"]');
-      const chips = sec.querySelectorAll('.chip');
-      const fb = document.getElementById('fb3');
+  // 結果卡
+  function buildResult(){
+    const s1 = state.picks.step1 || '交給你安排 🎁';
+    const s2 = state.picks.step2 || '交給你安排 🎁';
+    const s3 = state.picks.step3 || '交給你安排';
+    const s4 = state.picks.step4 ? `小收尾：${state.picks.step4}` : '小收尾：遇見了再說。';
 
-      chips.forEach(ch=>{
-        ch.addEventListener('click', ()=>{
-          selectChip(sec, ch);
-          enableNext(sec, true);
-          fb.style.display = 'block';
-          fb.textContent = rand(feedbacks.step3);
-          state.picks.step3 = ch.dataset.value;
-        });
-      });
-      sec.querySelector('[data-next]').addEventListener('click', ()=>{
-        state.step = 4; switchScreen('step4'); setProgress(4);
-      });
-      sec.querySelector('[data-back]').addEventListener('click', ()=>{
-        state.step = 2; switchScreen('step2'); setProgress(2);
-      });
-      sec.querySelector('[data-random]').addEventListener('click', ()=>{
-        const all = [...chips];
-        const pick = all[Math.floor(Math.random()*all.length)];
-        pick.click(); showToast("小確幸抽中了");
-      });
-    })();
+    const q = `旅行有風景、有故事，但最美的瞬間，常常在不經意的靠近。<br>不管去哪裡，我真正想看到的風景，只有妳。`;
+    const html = `
+      <div class="res-line">第一幕：<b>${clean(s1)}</b></div>
+      <div class="res-line">味道是：<b>${clean(s2)}</b></div>
+      <div class="res-line">休息我們去：<b>${clean(s3)}</b></div>
+      <div class="res-line">${s4}</div>
+      <div class="quote" style="margin-top:10px">${q}</div>
+    `;
+    qs('#summary').innerHTML = html;
 
-    // ====== Step4 綁定（彩蛋可跳過） ======
-    (function(){
-      const sec = panel.querySelector('[data-screen="step4"]');
-      const chips = sec.querySelectorAll('.chip');
-      const fb = document.getElementById('fb4');
+    const heart = qs('.heart');
+    heart.dataset.on="false";
+    heart.onclick = ()=>toggleHeart(heart);
+    heart.onkeypress = e=>{ if(e.key==='Enter'||e.key===' ') toggleHeart(heart); };
 
-      chips.forEach(ch=>{
-        ch.addEventListener('click', ()=>{
-          selectChip(sec, ch);
-          fb.style.display = 'block';
-          fb.textContent = rand(feedbacks.step4);
-          state.picks.step4 = ch.dataset.value;
-        });
-      });
+    // 調整底部按鈕：重來 / 複製 / 分享
+    btnBack.onclick = ()=> location.reload();
+    btnNext.onclick = copySummary;
+    btnRandom.onclick = shareSummary;
+    btnRandom.textContent = '分享';
+  }
 
-      sec.querySelector('[data-back]').addEventListener('click', ()=>{
-        state.step = 3; switchScreen('step3'); setProgress(3);
-      });
+  function clean(s){ return s.replace(/^A\.|^B\.|^C\.|^D\.|\(.+\)$/g,'').trim(); }
 
-      sec.querySelector('[data-finish]').addEventListener('click', ()=>{
-        // 若未選彩蛋也可完成
-        buildResult();
-        switchScreen('result');
-        setProgress(4);
-      });
-    })();
-
-    // ====== 結果卡 ======
-    function buildResult(){
-      const s1 = state.picks.step1 || "交給你安排 🎁";
-      const s2 = state.picks.step2 || "交給你安排 🎁";
-      const s3 = state.picks.step3 || "交給你安排";
-      const s4 = state.picks.step4 ? `小收尾：${state.picks.step4}` : "小收尾：當天再說。";
-
-      const lines = [
-        `第一幕：<b>${s1.replace(/^A\.|^B\.|^C\./,'').trim()}</b>`,
-        `味道是：<b>${s2.replace(/^A\.|^B\.|^C\./,'').trim()}</b>`,
-        `休息我們去：<b>${s3.replace(/^A\.|^B\.|^C\./,'').trim()}</b>`,
-      ];
-
-      const quote = `旅行有風景、有故事，但最美的瞬間，常常在不經意的靠近。<br>
-      不管去哪裡，我真正想看到的風景，只有妳。`;
-
-      const el = document.getElementById('summary');
-      el.innerHTML = `
-        ${lines.map(l=>`<div class="result-line">${l}</div>`).join("")}
-        <div class="result-line">${s4}</div>
-        <div class="quote" style="margin-top:10px">${quote}</div>
-      `;
-      document.getElementById('copy').onclick = copySummary;
-      document.getElementById('share').onclick = shareSummary;
-      document.getElementById('restart').onclick = ()=>{
-        state.step = 0; state.picks = {};
-        // 清選擇
-        document.querySelectorAll('.chip').forEach(c=>c.dataset.selected="false");
-        switchScreen('welcome'); setProgress(1);
-      };
-
-      const heart = document.querySelector('.heart');
-      heart.dataset.on="false";
-      heart.onclick = ()=>{ toggleHeart(heart); };
-      heart.onkeypress = (e)=>{ if(e.key==="Enter"||e.key===" "){toggleHeart(heart);} };
-    }
-
-    function toggleHeart(el){
-      const on = el.dataset.on === "true";
-      el.dataset.on = String(!on);
-      showToast(!on ? "妳，就是我今天最想記住的畫面。" : "我會再把喜歡放回口袋裡。");
-    }
-
-    async function copySummary(){
-      const text = document.getElementById('summary').innerText.replace(/\n{2,}/g,"\n").trim();
-      try{ await navigator.clipboard.writeText(text); showToast("已複製全文"); }catch{ showToast("複製失敗，請手動選取"); }
-    }
-
-    async function shareSummary(){
-      const text = document.getElementById('summary').innerText.replace(/\n{2,}/g,"\n").trim();
-      if(navigator.share){
-        try{ await navigator.share({ text }); }catch{}
-      }else{
-        copySummary();
-      }
-    }
-
-    // 初始化畫面（開場無進度，僅亮第一段 0%）
-    setProgress(1);
-  </script>
+  async function copySummary(){
+    const text = qs('#summary').innerText.replace(/\n{2,}/g,"\n").trim();
+    try{ await navigator.clipboard.writeText(text); toast('已複製全文'); }catch{ toast('複製失敗，請手動選取'); }
+  }
+  async function shareSummary(){
+    const text = qs('#summary').innerText.replace(/\n{2,}/g,"\n").trim();
+    if(navigator.share){ try{ await navigator.share({text}); }catch{} }
+    else{ copySummary(); }
+  }
+  function toggleHeart(el){
+    const on = el.dataset.on === 'true';
+    el.dataset.on = String(!on);
+    toast(!on ? '妳，就是我今天最想記住的畫面。' : '我會把喜歡先放回口袋。');
+  }
+</script>
 </body>
 </html>
