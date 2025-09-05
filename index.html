@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>台南冒險開場 💕</title>
+  <title>今天的台南</title>
   <style>
     body, html {
       margin: 0;
       padding: 0;
       height: 100%;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Noto Sans TC', 'Segoe UI', sans-serif;
     }
 
     .hero {
@@ -18,71 +18,94 @@
       background: url('assets/bg.jpg') no-repeat center center/cover;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
       text-align: center;
       color: white;
-      padding: 1rem;
+      padding: 2rem 1rem;
     }
 
-    .hero h1 {
-      font-size: 1.8rem;
-      font-weight: bold;
-      margin-bottom: 1rem;
-      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
-    }
-
-    .hero p {
-      font-size: 1rem;
-      line-height: 1.6;
-      max-width: 320px;
-      margin-bottom: 2rem;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    .title-box {
+      background: rgba(0, 0, 0, 0.65);
+      border-radius: 25px;
+      padding: 1rem 2rem;
+      margin-top: 1rem;
+      margin-bottom: 1.5rem;
+      display: inline-block;
       opacity: 0;
-      animation: fadeIn 2s forwards;
+      animation: fadeIn 1s forwards;
+    }
+
+    .title-box h1 {
+      font-size: 2rem;   /* 主標題大字 */
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .title-box p {
+      font-size: 1rem;   /* 副標題小字 */
+      margin: 0.4rem 0 0 0;
+    }
+
+    .description {
+      max-width: 360px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+      animation-delay: 1s;
     }
 
     .btn {
-      background: #d6336c;
+      background: #e05285;
       border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 30px;
-      font-size: 1.1rem;
+      padding: 0.6rem 1.5rem;
+      border-radius: 25px;
+      font-size: 1rem;
       color: white;
       font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+      animation-delay: 2s;
       transition: transform 0.2s ease, background 0.3s ease;
     }
 
     .btn:hover {
       transform: scale(1.05);
-      background: #e05285;
+      background: #d6336c;
     }
 
     @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
   <div class="hero">
-    <h1>今天的台南，不是隨機，是屬於妳的冒險</h1>
-    <p>
-      妳做的每一個小選擇，都會悄悄改變我們的路線。<br>
+    <!-- 標語區塊 -->
+    <div class="title-box">
+      <h1>今天的台南</h1>
+      <p>不是隨機，是屬於妳的冒險</p>
+    </div>
+
+    <!-- 敘述文字 -->
+    <div class="description">
+      “ 妳做的每一個小選擇，都會悄悄改變我們的路線。<br>
       沒有正確答案，只有想被妳發現的風景。<br>
-      因為有妳，台南才會變得不一樣。
-    </p>
+      因為有妳，台南才會變得不一樣 ”
+    </div>
+
+    <!-- 按鈕 -->
     <button class="btn" onclick="startAdventure()">開始冒險</button>
   </div>
 
   <script>
     function startAdventure() {
-      alert("接下來進入 Tinder 式互動選擇 🚀");
-      // 之後可改成跳轉或顯示下一頁互動
-      // window.location.href = "tinder.html";
+      // 之後可接到互動畫面
+      alert("準備開始冒險 🚀");
     }
   </script>
 </body>
