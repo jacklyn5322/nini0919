@@ -3,399 +3,430 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>台南浪漫冒險解鎖｜手帳旅行票</title>
-<meta name="description" content="這不是普通的旅行，而是專屬妳的冒險。">
+<title>台南小冒險 · 專屬妳的互動旅行</title>
+
+<!-- Google Fonts：日系圓潤＋手寫 -->
+<link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=Noto+Sans+TC:wght@400;700;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    /* 霧面色票 */
-    --cream:#FDFBF7;   /* 奶油米白（底） */
-    --sage:#AFCDBE;    /* 霧湖綠（主） */
-    --sage-deep:#8FB8A8;
-    --wood:#9C7E68;    /* 木棕（重點） */
-    --ink:#2F2F2F;     /* 墨黑（文字） */
-    --muted:#777;      /* 次要字 */
-    --paper:#FFFFFF;   /* 卡片底 */
-    --ring:rgba(143,184,168,.30);
+:root{
+  --bg:#F7F6F3;          /* 霧米白 */
+  --ink:#3E3B37;         /* 柔黑 */
+  --card:#FFFFFF;        /* 卡片白 */
+  --accent:#6A8CAF;      /* 柔藍重點 */
+  --soft:#E9E5DC;        /* 柔灰 */
+  --blush:#F2C9C1;       /* 霧粉 */
+  --sage:#CDE1D6;        /* 霧綠 */
+  --sky:#DDE9F5;         /* 霧藍 */
+  --honey:#F6E1A9;       /* 霧蜜 */
+  --shadow:0 10px 28px rgba(0,0,0,.08);
+}
 
-    --r-lg:20px; --r-md:14px;
-    --shadow:0 10px 24px rgba(0,0,0,.07);
-    --shadow-soft:0 6px 16px rgba(0,0,0,.06);
-    --tap:translateY(1px) scale(.99);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0;color:var(--ink);
-    font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-    background:
-      radial-gradient(1100px 680px at 110% -10%, #E8EFE9 0%, rgba(232,239,233,0) 55%),
-      radial-gradient(900px 600px at -10% 15%, #EFECE6 0%, rgba(239,236,230,0) 55%),
-      var(--cream);
-  }
-  .wrap{max-width:820px;margin:0 auto;padding:14px 14px 120px}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);}
+body{font-family:"Noto Sans TC","Kosugi Maru",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",sans-serif;line-height:1.65}
 
-  /* hero（可換成你自己的巷弄照，先用純色+紋理） */
-  .hero{
-    position:relative;height:160px;border-radius:var(--r-lg);overflow:hidden;
-    background:linear-gradient(180deg,#e8f0ec,#f7f4ef);
-    box-shadow:var(--shadow-soft);
-  }
-  .hero::after{
-    content:"";position:absolute;inset:0;pointer-events:none;
-    background:repeating-linear-gradient(45deg, rgba(255,255,255,.15) 0 8px, rgba(255,255,255,0) 8px 16px);
-    mix-blend-mode:overlay;
-  }
-  .hero-tag{
-    position:absolute;left:14px;bottom:14px;
-    background:#fff; border:1px solid #e7efe9; color:#4a5f55;
-    padding:8px 12px;border-radius:12px;display:inline-flex;gap:8px;align-items:center;
-    box-shadow:var(--shadow-soft);font-weight:700;
-  }
+.wrap{max-width:960px;margin:auto;padding:16px}
 
-  header{display:flex;align-items:flex-end;justify-content:space-between;margin:12px 2px 10px}
-  h1{margin:0;font-size:22px;letter-spacing:.3px}
-  .sub{margin:2px 0 0;color:var(--muted);font-size:13px}
+/* Header */
+header{
+  position:sticky; top:0; z-index:10; backdrop-filter:saturate(180%) blur(8px);
+  background:rgba(247,246,243,.85); border-bottom:1px solid rgba(0,0,0,.05)
+}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:10px 16px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand img{height:46px;width:auto;border-radius:10px;box-shadow:var(--shadow)}
+.brand .t{font-weight:900;letter-spacing:.5px;font-size:clamp(18px,4.2vw,26px)}
+.cta-top a{display:inline-block;text-decoration:none;background:var(--accent);color:#fff;
+  padding:10px 14px;border-radius:12px;font-weight:800;box-shadow:var(--shadow)}
 
-  /* 票券進度（4張） */
-  .tickets{display:flex;gap:10px;margin:10px 0 14px;flex-wrap:wrap}
-  .t{
-    flex:1 1 160px; min-width:150px; background:var(--paper);
-    border:2px dashed #ddd3ca;border-radius:16px;position:relative;
-    padding:8px 10px; box-shadow:var(--shadow-soft);
-  }
-  .t::before,.t::after{
-    content:""; position:absolute; top:50%; transform:translateY(-50%);
-    width:18px; height:18px; background:var(--cream); border-radius:50%;
-    border:1px solid #e8e0d7;
-  }
-  .t::before{left:-10px}
-  .t::after{right:-10px}
-  .t-title{font-size:12px;color:#6b5a4f}
-  .stamp-mini{
-    position:absolute;right:6px;bottom:6px;font-size:12px;
-    color:#b76e79;border:1px solid #d8a2aa; border-radius:6px;padding:2px 6px;
-    transform:rotate(-10deg) scale(.9);opacity:.15;transition:.2s
-  }
-  .t[data-done="true"] .stamp-mini{opacity:.9}
+/* Hero */
+.hero{margin:14px auto 6px}
+.hero-card{background:var(--card);border-radius:24px;box-shadow:var(--shadow);overflow:hidden;position:relative}
+.hero-visual{
+  height:240px;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,.15) 100%),
+    url('assets/hero-tainan.jpg') center/cover no-repeat; /* ← 換成你的封面圖 */
+}
+.hero-content{padding:18px}
+.h1{font-family:"Kosugi Maru","Noto Sans TC",sans-serif;font-size:clamp(22px,5.5vw,34px);font-weight:900}
+.sub{color:#5e5a56}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.btn{
+  border:none;cursor:pointer;font-weight:900;border-radius:14px;padding:14px 18px;font-size:clamp(15px,4vw,18px);
+  box-shadow:var(--shadow);transition:transform .05s ease
+}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-ghost{background:#fff;color:var(--accent);border:2px dashed var(--accent)}
 
-  /* 大票券（每一步的卡） */
-  .ticket{
-    background:var(--paper);
-    border:2px dashed #d9d3cc;border-radius:20px;box-shadow:var(--shadow);
-    padding:16px; position:relative; animation:fade .2s ease;
-  }
-  .ticket::before{
-    content:"✂"; position:absolute; top:-10px; left:50%; transform:translateX(-50%);
-    background:var(--cream); padding:0 4px; color:#b4a79c; font-size:14px;
-  }
-  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:translateY(0)}}
+/* Intro overlay (姓名 + 開始） */
+.intro{
+  position:fixed; inset:0; background:rgba(0,0,0,.25); display:flex; align-items:center; justify-content:center; padding:18px;
+}
+.intro .panel{
+  max-width:520px;width:100%;background:var(--card);border-radius:22px;box-shadow:var(--shadow);padding:20px;
+}
+.intro h2{margin:0 0 10px}
+.intro .note{font-size:14px;color:#6d6863;margin-bottom:12px}
+.input{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.input input{
+  flex:1;min-width:160px;border:2px solid var(--soft);border-radius:12px;padding:12px 14px;font-size:16px;background:#fff
+}
 
-  /* 插畫卡片標頭 */
-  .card-head{display:flex;gap:10px;align-items:center;margin-bottom:10px}
-  .sticker{
-    width:44px;height:44px;border-radius:12px;flex:0 0 auto;
-    display:grid;place-items:center;
-    background: conic-gradient(from 210deg at 50% 50%, #bcd6c9, #f4ede6);
-    box-shadow: var(--shadow-soft);
-  }
-  .card-title{font-size:18px;margin:0}
-  .hint{font-size:13px;color:#566b62;background:#f4f8f6;border:1px dashed #d7e6df;padding:10px;border-radius:12px;margin-top:8px}
+/* Progress map */
+.map{margin:16px auto}
+.map .road{height:12px;background:#EAE8E2;border-radius:999px;overflow:hidden;box-shadow: inset 0 2px 6px rgba(0,0,0,.05)}
+.map .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--sage),var(--honey),var(--blush));transition:width .35s ease}
+.map .labels{display:flex;justify-content:space-between;font-size:13px;color:#6d6863;margin-top:6px}
+.saveflag{display:none;margin-top:6px;color:#4CAF50;font-weight:900}
+.saveflag.show{display:block}
 
-  /* 選項（貼紙） */
-  .options{display:grid;gap:12px;margin-top:10px}
-  .opt{
-    background:#fdfaf5;border:1.5px solid #e3ddd6;border-radius:14px;
-    padding:12px;display:flex;align-items:center;gap:10px;font-size:16px;cursor:pointer;
-    transition:.15s; position:relative; min-height:52px;
-  }
-  .opt:hover{background:#f9f5ef}
-  .opt .ico{font-size:22px}
-  .opt[data-selected="true"]{
-    border-color:var(--sage); background:#F2F7F4;
-    box-shadow:0 8px 18px var(--ring);
-  }
-  .stamp{
-    position:absolute; right:10px; top:8px;
-    font-size:18px; color:var(--sage-deep); opacity:0; transform:scale(.6) rotate(-12deg);
-    transition:.15s;
-  }
-  .opt[data-selected="true"] .stamp{opacity:1; transform:scale(1) rotate(-6deg)}
+/* Scene cards（劇情） */
+.scene{display:none}
+.scene.active{display:block}
+.card{
+  background:var(--card);border-radius:22px;box-shadow:var(--shadow);padding:18px;margin:12px 0;position:relative;
+}
+.card h3{margin:0 0 6px;font-size:clamp(18px,4.6vw,22px);font-weight:900}
+.card .meta{color:#6b6762;margin-bottom:10px}
+.opts{display:grid;gap:10px}
+.opt{
+  background:#fff;border:2px solid transparent;border-radius:14px;padding:14px;text-align:left;font-weight:800;cursor:pointer;
+  box-shadow:0 6px 14px rgba(0,0,0,.06);transition:transform .08s ease,border-color .2s ease, box-shadow .2s ease
+}
+.opt:hover{transform:translateY(-2px)}
+.opt.selected{border-color:var(--accent);box-shadow:0 10px 22px rgba(0,0,0,.08)}
 
-  /* 底部操作列（拇指易點） */
-  .bar{
-    position:fixed; left:0; right:0; bottom:0; background:rgba(253,251,247,.90);
-    backdrop-filter: blur(6px); border-top:1px solid #eae5de; padding:10px 12px;
-  }
-  .bar-inner{max-width:820px;margin:0 auto;display:flex;gap:10px}
-  .btn{
-    flex:1; display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    padding:14px; border-radius:16px; border:1px solid transparent; cursor:pointer;
-    font-weight:700; letter-spacing:.3px; min-height:50px; user-select:none; transition:.12s ease;
-  }
-  .btn:active{transform:var(--tap)}
-  .btn.primary{background:linear-gradient(180deg,#a9cbbb,#8FB8A8); color:#0c2f24; box-shadow:0 10px 22px var(--ring)}
-  .btn.ghost{background:#fff; color:#6a5a4f; border-color:#eadfd4}
-  .btn.wood{background:linear-gradient(180deg,#b9967f,#9C7E68); color:#fff}
+/* 貼紙（每次選擇都掉一張） */
+.sticker{
+  position:absolute; right:12px; top:-12px; transform:rotate(-6deg); background:#fff; border-radius:10px; padding:8px 12px;
+  box-shadow:var(--shadow); font-family:"Caveat",cursive; font-size:20px;
+}
+.sticker:before{
+  content:""; position:absolute; top:-10px; left:10px; right:10px; height:16px; border-radius:3px; opacity:.9;
+  background:repeating-linear-gradient(45deg,#f8e6a8,#f8e6a8 8px,rgba(0,0,0,.04) 8px,rgba(0,0,0,.04) 16px);
+}
+.stk-sage{background:var(--sage)} .stk-sky{background:var(--sky)} .stk-blush{background:var(--blush)}
 
-  /* 結果卡 */
-  .result{
-    background:#fffefb;border:2px dashed #e6dccf;border-radius:20px;box-shadow:var(--shadow);padding:16px;position:relative
-  }
-  .seal{
-    position:absolute; right:14px; top:14px;
-    color:#b76e79; border:3px double #c88b94; border-radius:50%;
-    padding:10px 12px; font-weight:900; transform:rotate(-12deg); opacity:.9;
-  }
-  .res-line{margin:8px 0; font-size:16px}
-  .quote{background:#fffdf7;border:1px solid #f0e8d9;color:#6b4f2e;border-radius:14px;padding:12px;margin-top:12px}
+/* 小愛心雨（選擇時） */
+.heart{position:fixed;pointer-events:none;animation:floatUp 1.2s ease forwards;font-size:18px;opacity:0}
+@keyframes floatUp{
+  0%{transform:translateY(0) scale(.9);opacity:0}
+  20%{opacity:1}
+  100%{transform:translateY(-120px) scale(1.2);opacity:0}
+}
 
-  /* 提示 */
-  .toast{
-    position:fixed; left:50%; bottom:22px; transform:translateX(-50%);
-    background:#1f1f1f; color:#fff; padding:10px 14px; border-radius:12px; opacity:0; transition:.18s; z-index:9999; font-size:13px
-  }
+/* Result ticket */
+.ticket{display:none;background:linear-gradient(135deg,#fff,#fffef7);border-radius:24px;box-shadow:var(--shadow);padding:18px;margin:14px 0;position:relative;overflow:hidden}
+.ticket:before,.ticket:after{content:"";position:absolute;top:50%;width:22px;height:22px;background:var(--bg);border-radius:50%;transform:translateY(-50%);box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.ticket:before{left:-11px}.ticket:after{right:-11px}
+.t-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1px dashed rgba(0,0,0,.15);padding-bottom:10px;margin-bottom:10px}
+.badge{background:var(--sage);padding:8px 12px;border-radius:14px;font-weight:900}
+.t-rows{display:grid;gap:10px;font-weight:800}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.row label{font-size:13px;color:#6b6762}
+.pill{background:var(--sky);padding:8px 12px;border-radius:999px}
+.pill.alt{background:var(--blush)}
+.pill.honey{background:var(--honey)}
+.share{
+  margin-top:12px; display:flex; gap:10px; flex-wrap:wrap
+}
 
-  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* RWD 微調 */
+@media(min-width:900px){
+  .hero-visual{height:320px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <!-- hero -->
-    <div class="hero" role="img" aria-label="台南巷弄柔霧背景">
-      <div class="hero-tag" aria-hidden="true">📒 可愛手帳旅行票</div>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <img src="assets/logo-jci.png" alt="logo"> <!-- ← 換成你的 logo；已放大 -->
+      <div class="t">台南小冒險 · 互動旅行</div>
     </div>
-
-    <!-- 標題 -->
-    <header>
-      <div>
-        <h1>台南浪漫冒險解鎖</h1>
-        <p class="sub">這不是普通的旅行，而是屬於妳的 1 分鐘小選擇。</p>
-      </div>
-    </header>
-
-    <!-- 票券進度：完成會蓋章 -->
-    <div class="tickets" aria-label="進度票券" aria-live="polite">
-      <div class="t" data-step="1"><div class="t-title">① 主題</div><div class="stamp-mini">已使用</div></div>
-      <div class="t" data-step="2"><div class="t-title">② 味道</div><div class="stamp-mini">已使用</div></div>
-      <div class="t" data-step="3"><div class="t-title">③ 休息</div><div class="stamp-mini">已使用</div></div>
-      <div class="t" data-step="4"><div class="t-title">④ 彩蛋</div><div class="stamp-mini">已使用</div></div>
-    </div>
-
-    <!-- 主容器 -->
-    <main id="panel" aria-live="polite">
-      <!-- Welcome（直接顯示 Step1，這段可保留做過場） -->
-      <section data-screen="step1" class="ticket">
-        <div class="card-head">
-          <div class="sticker">🎴</div>
-          <h2 class="card-title">今天最想展開的文青場景是？</h2>
-        </div>
-        <div class="options" role="group" aria-label="文青場景">
-          <button class="opt" data-value="奇美博物館 🎨（展覽＋藝術＋拍照）"><span class="ico">🎨</span>奇美博物館<span class="stamp">✔</span></button>
-          <button class="opt" data-value="孔廟老街 🏮（歷史氛圍＋特色小店）"><span class="ico">🏮</span>孔廟老街<span class="stamp">✔</span></button>
-          <button class="opt" data-value="十鼓糖廠 🌙（工業遺跡＋夜間燈光）"><span class="ico">🌙</span>十鼓糖廠<span class="stamp">✔</span></button>
-          <button class="opt" data-value="交給你安排 🎁"><span class="ico">🎁</span>交給你安排<span class="stamp">✔</span></button>
-        </div>
-        <p id="fb1" class="hint" style="display:none;margin-top:10px"></p>
-      </section>
-
-      <section data-screen="step2" class="ticket" hidden>
-        <div class="card-head">
-          <div class="sticker">🍜</div>
-          <h2 class="card-title">旅程裡，妳最想把哪個味道寫進今天？</h2>
-        </div>
-        <div class="options" role="group" aria-label="食物/飲品偏好">
-          <button class="opt" data-value="台南小吃 🍜（牛肉湯/擔仔麵/棺材板）"><span class="ico">🍜</span>台南小吃<span class="stamp">✔</span></button>
-          <button class="opt" data-value="老咖啡廳 ☕（老宅的手沖與木質香）"><span class="ico">☕</span>老咖啡廳<span class="stamp">✔</span></button>
-          <button class="opt" data-value="甜點或冰品 🍧（可愛療癒一下）"><span class="ico">🍧</span>甜點或冰品<span class="stamp">✔</span></button>
-          <button class="opt" data-value="交給你安排 🎁（我想要驚喜）"><span class="ico">🎁</span>交給你安排<span class="stamp">✔</span></button>
-        </div>
-        <p id="fb2" class="hint" style="display:none;margin-top:10px"></p>
-      </section>
-
-      <section data-screen="step3" class="ticket" hidden>
-        <div class="card-head">
-          <div class="sticker">☕</div>
-          <h2 class="card-title">休息的時候，我們要坐在哪個角落？</h2>
-        </div>
-        <div class="options" role="group" aria-label="咖啡廳氛圍">
-          <button class="opt" data-value="KKOBA Apartment（文青簡約、安靜聊天）"><span class="ico">🏠</span>KKOBA Apartment<span class="stamp">✔</span></button>
-          <button class="opt" data-value="草木森花（老宅＋花藝感）"><span class="ico">🌿</span>草木森花<span class="stamp">✔</span></button>
-          <button class="opt" data-value="鹽埕老咖啡廳群（隨機挑一家）"><span class="ico">🏚️</span>鹽埕老咖啡廳群<span class="stamp">✔</span></button>
-          <button class="opt" data-value="可愛甜點風咖啡（繽紛療癒）"><span class="ico">🍰</span>可愛甜點風<span class="stamp">✔</span></button>
-          <button class="opt" data-value="交給你安排（想看你的小任性）"><span class="ico">✨</span>交給你安排<span class="stamp">✔</span></button>
-        </div>
-        <p id="fb3" class="hint" style="display:none;margin-top:10px"></p>
-      </section>
-
-      <section data-screen="step4" class="ticket" hidden>
-        <div class="card-head">
-          <div class="sticker">📸</div>
-          <h2 class="card-title">今天的畫面，要怎麼留？（彩蛋）</h2>
-        </div>
-        <div class="options" role="group" aria-label="浪漫收尾">
-          <button class="opt" data-value="風景照 🌆"><span class="ico">🌆</span>風景照<span class="stamp">✔</span></button>
-          <button class="opt" data-value="我們的合照 📸"><span class="ico">📸</span>我們的合照<span class="stamp">✔</span></button>
-          <button class="opt" data-value="只有我們懂的私密畫面 💌"><span class="ico">💌</span>私密畫面<span class="stamp">✔</span></button>
-          <button class="opt" data-value="遇見了再說"><span class="ico">🌟</span>遇見了再說<span class="stamp">✔</span></button>
-        </div>
-        <p id="fb4" class="hint" style="display:none;margin-top:10px"></p>
-      </section>
-
-      <section data-screen="result" class="result" hidden>
-        <div class="seal">已解鎖</div>
-        <h2 style="margin:0 0 6px">今天的台南，因妳而定義</h2>
-        <div id="summary" style="margin-top:6px"></div>
-        <div class="quote">旅行有風景、有故事，但最美的瞬間，常常在不經意的靠近。<br>不管去哪裡，我真正想看到的風景，只有妳。</div>
-      </section>
-    </main>
+    <div class="cta-top"><a href="#map">開始</a></div>
   </div>
+</header>
 
-  <!-- 底部操作列 -->
-  <nav class="bar" aria-label="操作列">
-    <div class="bar-inner">
-      <button class="btn ghost" id="btnBack">上一步</button>
-      <button class="btn wood" id="btnRandom">隨機</button>
-      <button class="btn primary" id="btnNext">下一步</button>
+<div class="wrap hero">
+  <div class="hero-card">
+    <div class="hero-visual"></div>
+    <div class="hero-content">
+      <div class="h1">今天，想帶妳去一場小小的冒險</div>
+      <div class="sub">不是問卷，而是會跟著妳的選擇前進的「互動故事」。每一步都會改變我們的台南路線，最後會生成一張屬於妳的冒險票券。</div>
+      <div class="actions">
+        <button class="btn btn-primary" id="btnStart">立即開始</button>
+        <button class="btn btn-ghost" id="btnHow">怎麼玩？</button>
+      </div>
     </div>
-  </nav>
+  </div>
+</div>
+
+<!-- 進度地圖 -->
+<div id="map" class="wrap map">
+  <div class="road"><div class="bar" id="bar"></div></div>
+  <div class="labels"><span>第一站</span><span>第二站</span><span>最終驚喜</span></div>
+  <div class="saveflag" id="saveflag">已紀錄你的選擇 ✅</div>
+</div>
+
+<!-- 劇情場景 -->
+<div class="wrap">
+
+  <!-- Scene 1 -->
+  <section class="scene active" id="s1">
+    <div class="card">
+      <div class="sticker stk-sage">Step 1</div>
+      <h3>🌇 老街岔路口</h3>
+      <p class="meta">夕陽把屋瓦染成金色。前面有三條路，妳牽著我的手，眼睛亮亮的看著我——</p>
+      <div class="opts">
+        <button class="opt" data-key="path" data-val="老宅咖啡｜文青散策">
+          走進老宅咖啡屋，找個窗邊的位置慢慢聊
+        </button>
+        <button class="opt" data-key="path" data-val="安平運河｜海風野餐">
+          往運河邊走吧，海風和草地準備好野餐墊了
+        </button>
+        <button class="opt" data-key="path" data-val="巷弄地圖｜插畫小店">
+          鑽進小巷，尋寶那家藏著插畫明信片的小店
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 2 -->
+  <section class="scene" id="s2">
+    <div class="card">
+      <div class="sticker stk-sky">Step 2</div>
+      <h3>🎒 今天的主角是？</h3>
+      <p class="meta">我們說好，今天的節奏只為妳而調。</p>
+      <div class="opts">
+        <button class="opt" data-key="focus" data-val="靜靜聊天｜找安靜角落">
+          我想好好聽妳說話，找個安靜角落慢慢聊
+        </button>
+        <button class="opt" data-key="focus" data-val="一起動手｜體驗工作坊">
+          一起動手做點什麼（拓印、手作甜點、或小小 DIY）
+        </button>
+        <button class="opt" data-key="focus" data-val="美照收藏｜拍攝任務">
+          幫妳拍幾張很美的照片，像把今天存進相簿
+        </button>
+        <button class="opt" data-key="focus" data-val="儀式收尾｜小卡驚喜">
+          結尾留一點儀式感，我準備了一張小卡片給妳
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 3 -->
+  <section class="scene" id="s3">
+    <div class="card">
+      <div class="sticker stk-blush">Step 3</div>
+      <h3>🌙 收尾的方式</h3>
+      <p class="meta">夜色剛好。最後一個選擇，讓今天有個小小完美句點。</p>
+      <div class="opts">
+        <button class="opt" data-key="ending" data-val="運河夜景｜散步&手牽手">
+          去看運河夜景吧，就慢慢走、慢慢說
+        </button>
+        <button class="opt" data-key="ending" data-val="小食堂｜深夜鹹食">
+          巷口那間小食堂，點兩份心情剛好的宵夜
+        </button>
+        <button class="opt" data-key="ending" data-val="小卡片｜專屬留言">
+          把今天寫進一張小卡片，最後把它交到妳手心
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 結果票券 -->
+  <section class="ticket" id="ticket">
+    <div class="t-head">
+      <h3 id="tkTitle">Tainan Mini Trip · 冒險票券</h3>
+      <div class="badge">完成！</div>
+    </div>
+    <div class="t-rows">
+      <div class="row"><label>給誰：</label><span class="pill honey" id="tkName">妳</span></div>
+      <div class="row"><label>路線：</label><span class="pill" id="tkPath">—</span></div>
+      <div class="row"><label>主角：</label><span class="pill alt" id="tkFocus">—</span></div>
+      <div class="row"><label>收尾：</label><span class="pill" id="tkEnding">—</span></div>
+      <div class="row"><label>小語：</label><span class="pill" id="tkMsg">把今天留給妳，其他交給我 💌</span></div>
+    </div>
+    <div class="share">
+      <button class="btn btn-primary" id="btnReset">重新玩一次</button>
+      <button class="btn btn-ghost" id="btnCopy">複製票券文字</button>
+    </div>
+  </section>
+
+</div>
+
+<!-- Intro：姓名輸入 -->
+<div class="intro" id="intro" aria-modal="true" role="dialog">
+  <div class="panel">
+    <h2>嘿，先跟我說妳的名字吧</h2>
+    <div class="note">（或留空，直接開始也可以）</div>
+    <div class="input">
+      <input id="girlName" type="text" placeholder="輸入名字，例如 Nini" />
+      <button class="btn btn-primary" id="introStart">開始冒險</button>
+    </div>
+  </div>
+</div>
 
 <script>
-  // ===== 文案回饋 =====
-  const FB = {
-    step1:[
-      "那裡的光影，會很適合妳的笑容。",
-      "時間慢下來，正好讓我多看妳一眼。",
-      "在燈光下，我想和妳靠近一點。"
-    ],
-    step2:[
-      "台南的日常，加上妳，就變成獨一無二的味道。",
-      "老宅裡的溫度，不如妳的一句話暖。",
-      "甜點可以吃，但最甜的是這趟旅程。",
-      "驚喜準備好，就等妳的笑容來揭曉。"
-    ],
-    step3:[
-      "那就把下午光，留在杯緣上。",
-      "花開在桌上，溫柔在心裡。",
-      "尋找只屬於今天的小確幸。",
-      "可愛，是今天的關鍵字。"
-    ],
-    step4:[
-      "這光好像在等我們。",
-      "那些只屬於我們的瞬間，我會小心收藏。"
-    ]
-  };
+/* ========== 狀態 ========== */
+const state = {
+  name: "",
+  answers: { path:null, focus:null, ending:null },
+  step: 0, total: 3
+};
 
-  // ===== 基本元素 & 狀態 =====
-  const panel = document.getElementById('panel');
-  const btnBack = document.getElementById('btnBack');
-  const btnNext = document.getElementById('btnNext');
-  const btnRandom = document.getElementById('btnRandom');
-  const tickets = [...document.querySelectorAll('.t')];
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
 
-  const state = { step:1, picks:{} }; // 1..4，result
+/* ========== 初始化 ========== */
+$("#btnStart").addEventListener("click", () => openIntro(true));
+$("#btnHow").addEventListener("click", () => alert("玩法：依照劇情選擇分支，每一步都有小互動。完成 3 步會生成專屬冒險票券！"));
 
-  function qs(s,root=document){ return root.querySelector(s); }
-  function qsa(s,root=document){ return [...root.querySelectorAll(s)]; }
-  const rand = arr => arr[Math.floor(Math.random()*arr.length)];
-  const toast = (m)=>{
-    const t=document.createElement('div'); t.className='toast'; t.textContent=m;
-    document.body.appendChild(t); requestAnimationFrame(()=>t.style.opacity=1);
-    setTimeout(()=>{t.style.opacity=0; setTimeout(()=>t.remove(),180)},1400);
-  };
+$("#introStart").addEventListener("click", () => {
+  state.name = ($("#girlName").value || "").trim();
+  $("#intro").style.display = "none";
+  goStep(1);
+});
+function openIntro(force=false){
+  $("#intro").style.display = "flex";
+  if(force){ $("#girlName").focus(); }
+}
 
-  // ===== 顯示切換 =====
-  function showStep(n){
-    state.step = n;
-    qsa('[data-screen]').forEach(sec=>sec.hidden=true);
-    qs('[data-screen="step'+n+'"]').hidden=false;
+/* 允許從 Hero 的「開始」直接跳 intro */
+document.getElementById("btnStart").addEventListener("click", ()=>{});
 
-    // 票券蓋章
-    tickets.forEach(t=>{
-      const idx = Number(t.dataset.step);
-      t.dataset.done = (idx < n) ? "true" : "false";
-      if(idx === n){ t.dataset.done = "true"; } // 當前步也亮
-    });
+/* ========== 進度 & 場景切換 ========== */
+function goStep(n){
+  state.step = Math.max(0, Math.min(state.total, n));
+  // 切換 scene
+  $$(".scene").forEach(el => el.classList.remove("active"));
+  if(n>=1 && n<=3) $(`#s${n}`).classList.add("active");
 
-    // 底部按鈕文案
-    btnBack.textContent = (n===1) ? '返回' : '上一步';
-    btnNext.textContent = (n<4) ? '下一步' : '完成';
-    btnRandom.textContent = '隨機';
-  }
+  // 進度條
+  const percent = ((n-1)/state.total)*100;
+  $("#bar").style.width = percent + "%";
 
-  function bindStep(stepKey){
-    const sec = qs('[data-screen="'+stepKey+'"]');
-    const chips = qsa('.opt', sec);
-    const fb = qs('#'+stepKey.replace('step','fb'));
-    chips.forEach(ch=>{
-      ch.addEventListener('click', ()=>{
-        chips.forEach(c=> c.dataset.selected='false');
-        ch.dataset.selected='true';
-        state.picks[stepKey] = ch.dataset.value;
-        if(fb){ fb.style.display='block'; fb.textContent = rand(FB[stepKey]); }
-      });
-    });
-  }
+  // 清除票券
+  if(n<=3){ $("#ticket").style.display = "none"; }
 
-  ['step1','step2','step3','step4'].forEach(bindStep);
+  // 捲動到進度區
+  document.getElementById("map").scrollIntoView({behavior:"smooth",block:"start"});
+}
 
-  // 初始顯示 Step1
-  showStep(1);
+function nextStep(){
+  if(state.step < state.total) goStep(state.step + 1);
+  else showTicket();
+}
 
-  // ===== 底部操作列 =====
-  btnBack.addEventListener('click', ()=>{
-    if(state.step<=1){ showStep(1); return; }
-    showStep(state.step-1);
+/* ========== 選項互動 ========== */
+$$(".opt").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    // 視覺回饋
+    const parent = btn.parentElement;
+    parent.querySelectorAll(".opt").forEach(b => b.classList.remove("selected"));
+    btn.classList.add("selected");
+
+    // 記錄
+    const key = btn.dataset.key;
+    const val = btn.dataset.val;
+    state.answers[key] = val;
+
+    // 小心動動畫
+    popHearts();
+
+    // 掛一張貼紙（隨機）
+    dropSticker(btn.closest(".card"));
+
+    // 顯示「已紀錄」
+    $("#saveflag").classList.add("show");
+    setTimeout(()=>$("#saveflag").classList.remove("show"), 800);
+
+    // 更新進度條（+1）
+    const next = Math.min(state.total, state.step + 1);
+    const percent = ((next-1)/state.total)*100;
+    $("#bar").style.width = percent + "%";
+
+    // 進入下一步（延遲一點點比較有節奏）
+    setTimeout(nextStep, 450);
   });
+});
 
-  btnRandom.addEventListener('click', ()=>{
-    const key = 'step'+state.step;
-    const sec = qs('[data-screen="'+key+'"]');
-    const chips = qsa('.opt', sec);
-    if(!chips.length) return;
-    const pick = rand(chips); pick.click();
-    toast('替妳抽了一個小驚喜');
-  });
-
-  btnNext.addEventListener('click', ()=>{
-    if(state.step<4){ showStep(state.step+1); return; }
-    buildResult();
-    qsa('[data-screen]').forEach(sec=>sec.hidden=true);
-    qs('[data-screen="result"]').hidden=false;
-
-    // 完成後調整操作列：重來 / 複製 / 分享
-    btnBack.textContent='重來';
-    btnBack.onclick = ()=>location.reload();
-
-    btnNext.textContent='複製';
-    btnNext.onclick = copySummary;
-
-    btnRandom.textContent='分享';
-    btnRandom.onclick = shareSummary;
-
-    // 所有票券顯示完成
-    tickets.forEach(t=> t.dataset.done="true");
-  });
-
-  // ===== 結果卡 =====
-  function cleanLabel(s){ return s.replace(/^A\.|^B\.|^C\.|^D\./,'').trim(); }
-  function buildResult(){
-    const s1 = state.picks.step1 || '交給你安排 🎁';
-    const s2 = state.picks.step2 || '交給你安排 🎁';
-    const s3 = state.picks.step3 || '交給你安排';
-    const s4 = state.picks.step4 ? `小收尾：${state.picks.step4}` : '小收尾：遇見了再說。';
-
-    qs('#summary').innerHTML = "";
+/* ========== 動畫：愛心雨 ========== */
+function popHearts(){
+  const hearts = ["💗","💖","💝","✨","🌟"];
+  for(let i=0;i<5;i++){
+    const el = document.createElement("div");
+    el.className = "heart";
+    el.textContent = hearts[Math.floor(Math.random()*hearts.length)];
+    el.style.left = (20 + Math.random()*60) + "vw";
+    el.style.top = (50 + Math.random()*10) + "vh";
+    el.style.animationDelay = (i*0.05)+"s";
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(), 1400);
   }
+}
 
-  async function copySummary(){
-    const text = qs('#summary').innerText.replace(/\n{2,}/g,"\n").trim();
-    try{ await navigator.clipboard.writeText(text); toast('已複製全文'); }catch{ toast('複製失敗，請手動選取'); }
-  }
-  async function shareSummary(){
-    const text = qs('#summary').innerText.replace(/\n{2,}/g,"\n").trim();
-    if(navigator.share){ try{ await navigator.share({text}); }catch{} }
-    else{ copySummary(); }
-  }
+/* ========== 動畫：貼紙掉落 ========== */
+function dropSticker(card){
+  const tag = document.createElement("div");
+  tag.className = "sticker " + ["stk-sage","stk-sky","stk-blush"][Math.floor(Math.random()*3)];
+  tag.textContent = ["nice!","cute!","yay!","sweet!","noted!"][Math.floor(Math.random()*5)];
+  // 放到卡片右上角，短暫顯示
+  card.appendChild(tag);
+  setTimeout(()=>{ tag.style.transition="transform .2s ease, opacity .2s ease"; tag.style.transform="translateY(6px) rotate(-2deg)"; }, 10);
+  setTimeout(()=> tag.remove(), 1200);
+}
+
+/* ========== 結果票券 ========== */
+function showTicket(){
+  // 進度條滿
+  $("#bar").style.width = "100%";
+  // 填資料
+  $("#tkName").textContent = state.name || "妳";
+  $("#tkPath").textContent = state.answers.path || "—";
+  $("#tkFocus").textContent = state.answers.focus || "—";
+  $("#tkEnding").textContent = state.answers.ending || "—";
+
+  // 小語生成（依照 focus 稍微客製）
+  let msg = "把今天留給妳，其他交給我 💌";
+  if(state.answers.focus?.includes("聊天")) msg = "我想聽妳說的每一句話，今晚屬於妳。";
+  if(state.answers.focus?.includes("動手")) msg = "一起做點什麼，讓回憶有溫度。";
+  if(state.answers.focus?.includes("美照")) msg = "把妳的笑，存成今天最好看的風景。";
+  if(state.answers.focus?.includes("儀式")) msg = "把心意寫進卡片，收在妳的口袋。";
+  $("#tkMsg").textContent = msg;
+
+  // 顯示
+  $("#ticket").style.display = "block";
+  $("#ticket").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+/* 重新 / 複製 */
+$("#btnReset").addEventListener("click", ()=>{
+  // 清狀態
+  state.answers = {path:null,focus:null,ending:null};
+  // 取消選中
+  $$(".opt").forEach(b=>b.classList.remove("selected"));
+  goStep(1);
+});
+$("#btnCopy").addEventListener("click", ()=>{
+  const txt = `【台南小冒險票券】
+給：${state.name || "妳"}
+路線：${state.answers.path || "-"}
+主角：${state.answers.focus || "-"}
+收尾：${state.answers.ending || "-"}
+小語：${$("#tkMsg").textContent}
+— 走吧，今天只為妳而安排。`;
+  navigator.clipboard.writeText(txt).then(()=>alert("已複製票券內容！"));
+});
+
+/* 預設開場就彈出姓名輸入（更有「被邀請」的儀式感） */
+openIntro();
 </script>
 </body>
 </html>
